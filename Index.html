@@ -1,0 +1,2677 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#4f6ef7">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Afoosha Miiltoo">
+<title>Afoosha Miiltoo</title>
+<link rel="manifest" href="manifest.json">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192'><defs><linearGradient id='g' x1='0' y1='0' x2='1' y2='1'><stop offset='0' stop-color='%234f6ef7'/><stop offset='1' stop-color='%237b8ffa'/></linearGradient></defs><rect width='192' height='192' rx='42' fill='url(%23g)'/><text x='96' y='130' font-size='96' font-weight='800' fill='white' text-anchor='middle' font-family='Arial,Helvetica,sans-serif' letter-spacing='-4'>AM</text></svg>">
+<link rel="apple-touch-icon" href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192'><defs><linearGradient id='g' x1='0' y1='0' x2='1' y2='1'><stop offset='0' stop-color='%234f6ef7'/><stop offset='1' stop-color='%237b8ffa'/></linearGradient></defs><rect width='192' height='192' rx='42' fill='url(%23g)'/><text x='96' y='130' font-size='96' font-weight='800' fill='white' text-anchor='middle' font-family='Arial,Helvetica,sans-serif' letter-spacing='-4'>AM</text></svg>">
+
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+  * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+  body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+         background: #f4f6fb; color: #1a1d29; min-height: 100vh;
+         -webkit-font-smoothing: antialiased;
+         padding-top: env(safe-area-inset-top); padding-bottom: env(safe-area-inset-bottom); }
+  .wrap { max-width: 900px; margin: 0 auto; padding: 20px 14px 40px; }
+
+  .lang-select {
+    appearance: none; border: none; background: #eef1f8; color: #1a1d29;
+    font-size: 12px; font-weight: 700; padding: 8px 30px 8px 12px;
+    border-radius: 10px; cursor: pointer; font-family: inherit;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 24 24' fill='none' stroke='%236b7280' stroke-width='3'><polyline points='6 9 12 15 18 9'/></svg>");
+    background-repeat: no-repeat; background-position: right 10px center;
+  }
+  .lang-select:focus { outline: 2px solid #4f6ef7; }
+  .lang-row { display: flex; justify-content: flex-end; margin-bottom: 12px; }
+
+  #authScreen { display: flex; flex-direction: column; justify-content: center; min-height: 90vh; padding: 24px; max-width: 480px; margin: 0 auto; }
+  .logo { width: 78px; height: 78px; border-radius: 22px;
+          background: linear-gradient(135deg,#4f6ef7,#7b8ffa);
+          display: flex; align-items: center; justify-content: center;
+          color: #fff; font-size: 30px; font-weight: 800; letter-spacing: -1.5px;
+          margin: 0 auto 20px;
+          box-shadow: 0 12px 32px rgba(79,110,247,0.4); }
+  .login-title { text-align: center; font-size: 25px; font-weight: 700; }
+  .login-sub { text-align: center; color: #6b7280; font-size: 14px; margin: 6px 0 24px; }
+
+  .tabs { display: flex; background: #eef1f8; border-radius: 12px; padding: 4px; margin-bottom: 20px; }
+  .tab { flex: 1; padding: 10px; text-align: center; font-size: 14px; font-weight: 600;
+         border-radius: 9px; cursor: pointer; color: #6b7280; transition: all 0.2s; border: none; background: none; font-family: inherit; }
+  .tab.active { background: #fff; color: #4f6ef7; box-shadow: 0 2px 6px rgba(16,24,40,0.08); }
+
+  .sub-tabs { display: flex; gap: 8px; margin-bottom: 20px; }
+  .sub-tabs button { flex: 1; padding: 10px; border-radius: 8px; font-size: 13px; font-weight: 700;
+    border: none; background: #eef1f8; color: #6b7280; cursor: pointer; font-family: inherit; transition: all 0.2s; }
+  .sub-tabs button.on { background: #4f6ef7; color: #fff; box-shadow: 0 4px 12px rgba(79,110,247,0.35); }
+
+  .field { margin-bottom: 14px; }
+  .field label { font-size: 13px; color: #6b7280; font-weight: 500; margin-bottom: 6px; display: block; }
+  .field input, .field select, .field textarea {
+                 width: 100%; padding: 14px 16px; font-size: 15px; border: none; border-radius: 12px;
+                 background: #fff; color: #1a1d29; box-shadow: 0 1px 3px rgba(16,24,40,0.06); outline: none;
+                 font-family: inherit; }
+  .field textarea { resize: vertical; min-height: 70px; }
+  .field input:focus, .field select:focus, .field textarea:focus { box-shadow: 0 0 0 2px #4f6ef7; }
+  .pw-wrap { position: relative; }
+  .pw-wrap input { padding-right: 46px; }
+  .pw-toggle { position: absolute; right: 12px; top: 50%; transform: translateY(-50%);
+               background: none; border: none; cursor: pointer; font-size: 16px;
+               color: #6b7280; padding: 6px; line-height: 1; }
+
+  .btn { width: 100%; padding: 15px; font-size: 15px; font-weight: 600; border: none;
+         border-radius: 12px; cursor: pointer; transition: transform 0.1s, opacity 0.15s; font-family: inherit; }
+  .btn:active { transform: scale(0.98); }
+  .btn-primary { background: #4f6ef7; color: #fff; box-shadow: 0 6px 18px rgba(79,110,247,0.35); }
+  .btn-success { background: #16a34a; color: #fff; box-shadow: 0 6px 18px rgba(22,163,74,0.35); }
+  .btn-warning { background: #f59e0b; color: #fff; box-shadow: 0 6px 18px rgba(245,158,11,0.35); }
+  .btn-ghost { background: #eef1f8; color: #4f6ef7; }
+
+  .topbar { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; gap: 10px; }
+  .topbar h1 { font-size: 22px; font-weight: 700; letter-spacing: -0.4px; }
+  .topbar .user { font-size: 13px; color: #6b7280; margin-top: 2px; }
+  .avatar-top { width: 42px; height: 42px; border-radius: 50%;
+                background: linear-gradient(135deg,#4f6ef7,#7b8ffa);
+                color: #fff; font-weight: 700; display: flex; align-items: center;
+                justify-content: center; font-size: 15px; flex-shrink: 0; }
+
+  .clock-bar { background: #1a1d29; color: #fff; border-radius: 16px; padding: 16px 18px;
+               margin-bottom: 16px; display: flex; justify-content: space-between; align-items: center;
+               box-shadow: 0 10px 24px rgba(16,24,40,0.18); gap: 10px; }
+  .clock-bar .greg { font-size: 12px; opacity: 0.65; }
+  .clock-bar .eth  { font-size: 14px; font-weight: 700; color: #93c5fd; margin-top: 2px; }
+  .clock-bar .time { font-size: 22px; font-weight: 700; letter-spacing: 0.5px;
+                     font-variant-numeric: tabular-nums; margin-top: 4px; }
+  .clock-bar .due  { text-align: right; font-size: 11px; opacity: 0.85; line-height: 1.5; min-width: 130px; }
+  .clock-bar .due strong { display: block; font-size: 12px; margin-bottom: 2px; }
+  .clock-bar .penalty-on { color: #fbbf24; font-weight: 700; display: block; }
+  .clock-bar .penalty-off { color: #4ade80; font-weight: 700; display: block; }
+
+  .pay-card { background: linear-gradient(135deg,#4f6ef7,#6d82fa); border-radius: 20px;
+              padding: 20px; color: #fff; box-shadow: 0 12px 30px rgba(79,110,247,0.35);
+              margin-bottom: 16px; transition: background 0.3s; }
+  .pay-card.late { background: linear-gradient(135deg,#dc2626,#ef4444);
+                   box-shadow: 0 12px 30px rgba(220,38,38,0.35); }
+  .pay-card.custom { background: linear-gradient(135deg,#7c3aed,#a78bfa);
+                     box-shadow: 0 12px 30px rgba(124,58,237,0.35); }
+  .pay-card.custom.late { background: linear-gradient(135deg,#b91c1c,#ef4444); }
+  .pay-card.cancelled { background: linear-gradient(135deg,#4b5563,#6b7280);
+                        box-shadow: 0 12px 30px rgba(75,85,99,0.35); }
+  .pay-card .label { font-size: 12px; opacity: 0.85; text-transform: uppercase; letter-spacing: 0.5px; }
+  .pay-card .cycle { font-size: 16px; font-weight: 700; margin: 4px 0 10px; }
+
+  .pay-status { display: inline-block; font-size: 12px; font-weight: 600;
+                padding: 6px 14px; border-radius: 20px;
+                background: rgba(255,255,255,0.22); margin-bottom: 6px; }
+  .pay-status.done { background: #16a34a; }
+  .pay-status.cancelled { background: #7f1d1d; }
+
+  .month-bar { display: flex; gap: 6px; margin-top: 12px;
+    overflow-x: auto; padding-bottom: 4px;
+    -webkit-overflow-scrolling: touch; scrollbar-width: none; }
+  .month-bar::-webkit-scrollbar { display: none; }
+  .month-pill { flex-shrink: 0; padding: 8px 12px; border-radius: 10px;
+    background: rgba(255,255,255,0.18);
+    color: #fff; font-size: 11px; font-weight: 700;
+    border: 2px solid transparent; cursor: pointer;
+    transition: all 0.2s; letter-spacing: 0.3px;
+    min-width: 46px; text-align: center; position: relative; }
+  .month-pill:active { transform: scale(0.95); }
+  .month-pill.current { background: rgba(255,255,255,0.35); border-color: rgba(255,255,255,0.6); }
+  .month-pill.paid { background: #16a34a; border-color: #15803d; }
+  .month-pill.past-unpaid { background: rgba(220,38,38,0.35); border-color: rgba(255,255,255,0.3); }
+  .month-pill.selected { background: #fff; color: #4f6ef7; border-color: #fff;
+                         box-shadow: 0 4px 12px rgba(0,0,0,0.2); }
+  .month-pill.selected.paid { background: #16a34a; color: #fff; }
+  .month-pill .tick { font-size: 10px; margin-left: 2px; }
+  .month-hint { font-size: 10px; opacity: 0.85; margin-top: 8px;
+                display: flex; align-items: center; gap: 4px; }
+  .month-hint span.dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; }
+  .dot.green { background: #4ade80; }
+  .dot.red { background: #f87171; }
+
+  .options-row { display: flex; gap: 10px; margin-top: 14px; }
+  .option { flex: 1; border-radius: 14px; padding: 12px 10px;
+            background: rgba(255,255,255,0.14);
+            border: 2px solid transparent; transition: all 0.2s ease;
+            min-height: 130px; display: flex; flex-direction: column; }
+  .option.active { background: #ffffff; color: #1a1d29;
+                   border-color: rgba(255,255,255,0.6);
+                   box-shadow: 0 6px 18px rgba(0,0,0,0.15); }
+  .option.inactive { opacity: 0.55; }
+  .option .opt-head { font-size: 9px; font-weight: 700; text-transform: uppercase;
+                      letter-spacing: 0.6px; opacity: 0.75; margin-bottom: 6px; }
+  .option .opt-title { font-size: 11px; font-weight: 600; margin-bottom: 6px; line-height: 1.2; }
+  .option .opt-amount { font-size: 22px; font-weight: 700; letter-spacing: -0.5px; line-height: 1; }
+  .option .opt-unit { font-size: 10px; font-weight: 600; opacity: 0.7; margin-top: 3px; }
+  .option .opt-note { font-size: 9px; opacity: 0.75; margin-top: 6px; line-height: 1.3; flex: 1; }
+  .option .opt-action { margin-top: 8px; }
+  .option.active .opt-head { color: #4f6ef7; opacity: 1; }
+  .option.active.warn .opt-head { color: #dc2626; opacity: 1; }
+  .option.active .opt-amount { color: #16a34a; }
+  .option.active.warn .opt-amount { color: #dc2626; }
+  .option .lock-icon { font-size: 12px; opacity: 0.7; margin-top: 8px; text-align: center;
+                       font-weight: 700; letter-spacing: 0.3px; }
+
+  .mini-btn { width: 100%; padding: 9px; font-size: 12px; font-weight: 700;
+              border: none; border-radius: 10px; cursor: pointer;
+              transition: transform 0.1s; font-family: inherit; }
+  .mini-btn:active { transform: scale(0.97); }
+  .mini-btn.green { background: #16a34a; color: #fff; }
+  .mini-btn.red   { background: #dc2626; color: #fff; }
+
+  .stat-row { display: flex; gap: 8px; margin-bottom: 16px; }
+  .stat { flex: 1; background: #fff; border-radius: 14px; padding: 12px 6px;
+          box-shadow: 0 8px 24px rgba(16,24,40,0.06); text-align: center; }
+  .stat .num { font-size: 20px; font-weight: 700; }
+  .stat .lbl { font-size: 10px; color: #6b7280; margin-top: 2px; text-transform: uppercase; letter-spacing: 0.4px; }
+  .stat.paid .num { color: #16a34a; }
+  .stat.due .num { color: #b45309; }
+  .stat.late .num { color: #dc2626; }
+
+  .section-title { font-size: 12px; font-weight: 600; color: #6b7280;
+                   text-transform: uppercase; letter-spacing: 0.6px; margin: 20px 4px 10px;
+                   display: flex; align-items: center; justify-content: space-between; gap: 8px; flex-wrap: wrap; }
+  .section-title .badge-count {
+    font-size: 11px; padding: 3px 10px; border-radius: 20px;
+    background: #dcfce7; color: #16a34a; font-weight: 700;
+    text-transform: none; letter-spacing: 0;
+  }
+  .section-title .badge-count.empty { background: #f1f5f9; color: #94a3b8; }
+
+  .admin-toggle {
+    display: inline-flex; align-items: center; gap: 4px;
+    font-size: 10px; padding: 4px 10px; border-radius: 20px;
+    background: #fef3c7; color: #b45309; font-weight: 700;
+    border: none; cursor: pointer; text-transform: none; letter-spacing: 0;
+    font-family: inherit;
+  }
+  .admin-toggle.on { background: #fee2e2; color: #dc2626; }
+
+  .table-wrap { background: #fff; border-radius: 16px; overflow: hidden;
+                box-shadow: 0 8px 24px rgba(16,24,40,0.06); overflow-x: auto; }
+  table { width: 100%; border-collapse: collapse; font-size: 13px; min-width: 620px; }
+  thead th { background: #f8fafc; text-align: left; font-weight: 600; font-size: 10px;
+             letter-spacing: 0.5px; text-transform: uppercase; color: #6b7280;
+             padding: 12px 10px; border-bottom: 1px solid #e8eaf0; white-space: nowrap; }
+  tbody td { padding: 12px 10px; border-bottom: 1px solid #f1f3f8; vertical-align: middle; }
+  tbody tr:last-child td { border-bottom: none; }
+  tbody tr.me { background: #eef2ff; }
+  tbody tr:hover { background: #fafbff; }
+  tbody tr.me:hover { background: #e5eaff; }
+  tbody tr.cancelled { background: #f9fafb; opacity: 0.7; }
+  tbody tr.cancelled:hover { background: #f3f4f6; opacity: 0.85; }
+
+  .empty-state {
+    padding: 40px 20px; text-align: center; color: #94a3b8; font-size: 13px;
+    background: #fff; border-radius: 16px;
+    box-shadow: 0 8px 24px rgba(16,24,40,0.06);
+  }
+  .empty-state .icon { font-size: 32px; opacity: 0.4; margin-bottom: 8px; }
+
+  @keyframes successPulse {
+    0%   { background-color: #86efac; box-shadow: 0 0 0 0 rgba(22,163,74,0.6); }
+    50%  { background-color: #4ade80; box-shadow: 0 0 0 6px rgba(22,163,74,0); }
+    100% { background-color: #dcfce7; box-shadow: 0 0 0 0 rgba(22,163,74,0); }
+  }
+  @keyframes warnPulse {
+    0%   { background-color: #fca5a5; }
+    50%  { background-color: #f87171; }
+    100% { background-color: #fee2e2; }
+  }
+  tr.row-flash td { animation: successPulse 2s ease-out; }
+  tr.row-warn td { animation: warnPulse 2s ease-out; }
+
+  .t-avatar { display: inline-flex; width: 30px; height: 30px; border-radius: 50%;
+              align-items: center; justify-content: center; color: #fff;
+              font-weight: 600; font-size: 11px; margin-right: 8px; vertical-align: middle; }
+  .t-name { font-weight: 600; font-size: 13px; white-space: nowrap; }
+  .t-role { font-size: 11px; color: #6b7280; margin-top: 1px; }
+  .t-role.leader { color: #4f6ef7; font-weight: 700; }
+  .t-role.officer { color: #7c3aed; font-weight: 600; }
+  .t-role.admin { color: #b45309; font-weight: 700; }
+  .t-member-cell { display: flex; align-items: center; }
+  .you-tag { font-size: 9px; font-weight: 700; padding: 2px 6px; border-radius: 6px;
+             background: #4f6ef7; color: #fff; text-transform: uppercase;
+             letter-spacing: 0.5px; margin-left: 6px; }
+  .badge { font-size: 11px; font-weight: 600; padding: 4px 10px; border-radius: 20px;
+           white-space: nowrap; display: inline-block; }
+  .badge.paid { background: #dcfce7; color: #16a34a; }
+  .badge.due  { background: #fef3c7; color: #b45309; }
+  .badge.late { background: #fee2e2; color: #dc2626; }
+  .badge.cancelled { background: #e5e7eb; color: #4b5563; }
+  .amount-cell { font-weight: 600; white-space: nowrap; font-variant-numeric: tabular-nums; }
+  .amount-cell.paid { color: #16a34a; }
+  .amount-cell.late { color: #dc2626; }
+  .amount-cell.cancelled { color: #9ca3af; }
+  .time-cell { font-size: 12px; color: #4b5563; white-space: nowrap; font-variant-numeric: tabular-nums; }
+  .time-cell .dim { color: #9ca3af; }
+
+  .permit-btn {
+    padding: 6px 9px; border-radius: 8px; font-size: 12px; font-weight: 700;
+    border: none; cursor: pointer; transition: transform 0.1s;
+    font-family: inherit; line-height: 1;
+  }
+  .permit-btn:active { transform: scale(0.95); }
+  .permit-btn.cancel { background: #fee2e2; color: #dc2626; }
+  .permit-btn.restore { background: #dcfce7; color: #16a34a; }
+  .permit-cell { text-align: right; white-space: nowrap; }
+
+  .col-sn { width: 44px; text-align: center; color: #4f6ef7; font-weight: 800;
+            font-variant-numeric: tabular-nums; user-select: none; font-size: 13px; }
+
+  .tab-subnav { display: flex; gap: 6px; margin-bottom: 14px; background: #eef1f8;
+                padding: 4px; border-radius: 12px; }
+  .tab-subnav button { flex: 1; padding: 9px; border-radius: 9px; font-size: 12px;
+                       font-weight: 700; border: none; background: none;
+                       color: #6b7280; cursor: pointer; font-family: inherit;
+                       transition: all 0.2s; }
+  .tab-subnav button.on { background: #fff; color: #4f6ef7;
+                          box-shadow: 0 2px 6px rgba(16,24,40,0.08); }
+
+  .file-upload-card { background: #fff; border-radius: 16px; padding: 18px;
+                      box-shadow: 0 8px 24px rgba(16,24,40,0.06); margin-bottom: 16px; }
+  .file-upload-card h3 { font-size: 15px; font-weight: 700; margin-bottom: 4px; }
+  .file-upload-card .sub { font-size: 12px; color: #6b7280; margin-bottom: 14px; }
+  .file-drop { border: 2px dashed #c7d2fe; border-radius: 12px; padding: 22px 14px;
+               text-align: center; background: #f5f7ff; cursor: pointer;
+               transition: all 0.15s; color: #4f6ef7; font-weight: 600; font-size: 13px;
+               display: block; }
+  .file-drop:hover, .file-drop.drag { background: #eef2ff; border-color: #4f6ef7; }
+  .file-drop .icon { font-size: 28px; display: block; margin-bottom: 6px; opacity: 0.85; }
+  .file-drop .hint { font-size: 11px; color: #6b7280; font-weight: 500; margin-top: 4px; }
+
+  .file-list { display: flex; flex-direction: column; gap: 8px; }
+  .file-item { background: #fff; border-radius: 14px; padding: 12px 14px;
+               box-shadow: 0 4px 14px rgba(16,24,40,0.05);
+               display: flex; align-items: center; gap: 12px; }
+  .file-item .fi-icon { width: 40px; height: 40px; border-radius: 10px;
+                        display: flex; align-items: center; justify-content: center;
+                        background: #eef2ff; color: #4f6ef7; font-size: 18px; flex-shrink: 0; }
+  .file-item .fi-body { flex: 1; min-width: 0; }
+  .file-item .fi-name { font-size: 13px; font-weight: 700; white-space: nowrap;
+                        overflow: hidden; text-overflow: ellipsis; }
+  .file-item .fi-meta { font-size: 11px; color: #6b7280; margin-top: 2px; }
+  .file-item .fi-actions { display: flex; gap: 6px; flex-shrink: 0; }
+  .fi-btn { width: 34px; height: 34px; border-radius: 9px; border: none;
+            background: #eef1f8; color: #4f6ef7; font-size: 14px;
+            cursor: pointer; display: flex; align-items: center; justify-content: center;
+            transition: transform 0.1s; font-family: inherit; }
+  .fi-btn:active { transform: scale(0.92); }
+  .fi-btn.danger { background: #fee2e2; color: #dc2626; }
+  .fi-btn.dl { background: #dcfce7; color: #16a34a; }
+
+  .note-editor { background: #fff; border-radius: 16px; padding: 18px;
+                 box-shadow: 0 8px 24px rgba(16,24,40,0.06); margin-bottom: 16px; }
+  .note-editor h3 { font-size: 15px; font-weight: 700; margin-bottom: 4px; }
+  .note-editor .sub { font-size: 12px; color: #6b7280; margin-bottom: 12px; }
+  .note-editor textarea { width: 100%; padding: 14px 16px; font-size: 14px;
+                          border: none; border-radius: 12px; background: #f8fafc;
+                          color: #1a1d29; outline: none; font-family: inherit;
+                          resize: vertical; min-height: 90px; line-height: 1.55;
+                          box-shadow: inset 0 0 0 1px #e8eaf0; }
+  .note-editor textarea:focus { box-shadow: inset 0 0 0 2px #4f6ef7; }
+  .note-editor .row-actions { display: flex; gap: 8px; margin-top: 10px;
+                              justify-content: flex-end; }
+
+  .note-card { background: linear-gradient(180deg,#fffef9,#fffbeb);
+               border: 1px solid #fde68a; border-left: 4px solid #f59e0b;
+               border-radius: 14px; padding: 14px 16px; margin-bottom: 10px;
+               box-shadow: 0 4px 14px rgba(245,158,11,0.08); }
+  .note-card .nc-head { display: flex; justify-content: space-between;
+                        align-items: center; gap: 8px; margin-bottom: 8px; }
+  .note-card .nc-author { font-size: 12px; font-weight: 800; color: #92400e;
+                          display: flex; align-items: center; gap: 6px; }
+  .note-card .nc-body { font-size: 14px; line-height: 1.6; color: #1a1d29;
+                        white-space: pre-wrap; word-break: break-word; }
+  .note-card .nc-meta { display: flex; justify-content: space-between;
+                        align-items: center; margin-top: 10px;
+                        font-size: 11px; color: #92400e; opacity: 0.75; }
+  .note-card .nc-actions { display: flex; gap: 6px; }
+  .note-mini { width: 28px; height: 28px; border-radius: 8px; border: none;
+               background: #fef3c7; color: #b45309; font-size: 12px;
+               cursor: pointer; display: flex; align-items: center; justify-content: center;
+               font-family: inherit; }
+  .note-mini:active { transform: scale(0.92); }
+  .note-mini.danger { background: #fee2e2; color: #dc2626; }
+
+  .family-toolbar { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 12px; }
+  .family-toolbar .btn { width: auto; padding: 10px 16px; font-size: 13px; }
+  .family-form { background: #fff; border-radius: 14px; padding: 14px;
+                 box-shadow: 0 6px 20px rgba(16,24,40,0.06); margin-bottom: 14px;
+                 display: none; }
+  .family-form.show { display: block; }
+  .family-form .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  @media (max-width: 520px) { .family-form .grid { grid-template-columns: 1fr; } }
+  .family-form label { font-size: 12px; color: #6b7280; font-weight: 600; display: block; margin-bottom: 4px; }
+  .family-form input, .family-form select { width: 100%; padding: 11px 13px; font-size: 14px;
+    border: none; border-radius: 10px; background: #f8fafc; color: #1a1d29; outline: none;
+    font-family: inherit; box-shadow: inset 0 0 0 1px #e8eaf0; }
+  .family-form input:focus, .family-form select:focus { box-shadow: inset 0 0 0 2px #4f6ef7; }
+  .family-form .form-actions { display: flex; gap: 8px; justify-content: flex-end; margin-top: 12px; }
+  .family-form .form-actions .btn { width: auto; padding: 10px 18px; font-size: 13px; }
+
+  .family-search { width: 100%; padding: 11px 14px; font-size: 14px;
+    border: none; border-radius: 10px; background: #fff; color: #1a1d29;
+    outline: none; font-family: inherit; margin-bottom: 12px;
+    box-shadow: 0 2px 8px rgba(16,24,40,0.05); }
+
+  .family-table-wrap { background: #fff; border-radius: 14px; overflow: auto;
+                       box-shadow: 0 8px 24px rgba(16,24,40,0.06); }
+  .family-table { width: 100%; border-collapse: collapse; font-size: 13px; min-width: 620px; }
+  .family-table thead th { background: #f8fafc; text-align: left; font-weight: 700;
+    font-size: 10px; letter-spacing: 0.5px; text-transform: uppercase; color: #6b7280;
+    padding: 12px 10px; border-bottom: 1px solid #e8eaf0; white-space: nowrap; }
+  .family-table tbody td { padding: 11px 10px; border-bottom: 1px solid #f1f3f8;
+    vertical-align: middle; }
+  .family-table tbody tr:last-child td { border-bottom: none; }
+  .family-table tbody tr:hover { background: #fafbff; }
+  .family-table .col-sn {
+    width: 52px; text-align: center; color: #4f6ef7;
+    font-weight: 800; font-size: 13px;
+    background: #f8fafc; border-right: 1px solid #e8eaf0;
+    font-variant-numeric: tabular-nums;
+  }
+  .family-table .col-gender { white-space: nowrap; }
+  .family-table .col-phone { font-variant-numeric: tabular-nums; white-space: nowrap; }
+  .family-table .row-actions { white-space: nowrap; text-align: right; }
+  .family-table .row-actions button {
+    width: 30px; height: 30px; border-radius: 8px; border: none;
+    font-size: 13px; cursor: pointer; font-family: inherit;
+    display: inline-flex; align-items: center; justify-content: center;
+    transition: transform 0.1s; margin-left: 4px;
+  }
+  .family-table .row-actions button:active { transform: scale(0.92); }
+  .family-table .row-actions .edit { background: #fef3c7; color: #b45309; }
+  .family-table .row-actions .del  { background: #fee2e2; color: #dc2626; }
+  .gender-badge { font-size: 11px; font-weight: 700; padding: 3px 9px; border-radius: 20px; }
+  .gender-badge.m { background: #dbeafe; color: #1e40af; }
+  .gender-badge.f { background: #fce7f3; color: #9d174d; }
+
+  /* Month-by-month completed payment tables */
+  .months-list { display: flex; flex-direction: column; gap: 10px; }
+  .month-block { background: #fff; border-radius: 14px; border: 1px solid #e8eaf0;
+    overflow: hidden; box-shadow: 0 4px 14px rgba(16,24,40,0.05); }
+  .month-block.current { border-color: #86efac;
+    box-shadow: 0 6px 20px rgba(22,163,74,0.10); }
+  .month-block-head { display: flex; align-items: center; gap: 10px; width: 100%;
+    padding: 14px 16px; background: linear-gradient(180deg, #fafbfc, #f7f9fb);
+    border: none; cursor: pointer; font-family: inherit; text-align: left;
+    transition: background 0.15s; }
+  .month-block-head:hover { background: #f0f4f9; }
+  .month-block.current .month-block-head {
+    background: linear-gradient(180deg, #f0fdf4, #dcfce7); }
+  .month-arrow { font-size: 11px; color: #6b7280; width: 12px; display: inline-block; }
+  .month-name { flex: 1; font-size: 14px; font-weight: 800; color: #1a1d29; }
+  .month-block.current .month-name { color: #166534; }
+  .month-badge { font-size: 11px; font-weight: 800; padding: 3px 10px; border-radius: 20px;
+    background: #dcfce7; color: #16a34a; border: 1px solid #86efac; white-space: nowrap; }
+  .month-badge.empty { background: #f1f5f9; color: #94a3b8; border-color: #e2e8f0; }
+  .month-table-wrap { overflow-x: auto; border-top: 1px solid #f1f3f8; }
+  .month-table { width: 100%; border-collapse: collapse; font-size: 13px; min-width: 520px; }
+  .month-table thead th { background: #f8fafc; text-align: left; font-weight: 700;
+    font-size: 10px; letter-spacing: 0.5px; text-transform: uppercase; color: #6b7280;
+    padding: 10px 12px; border-bottom: 1px solid #e8eaf0; white-space: nowrap; }
+  .month-table tbody td { padding: 11px 12px; border-bottom: 1px solid #f1f3f8;
+    vertical-align: middle; }
+  .month-table tbody tr:last-child td { border-bottom: none; }
+  .month-table tbody tr:hover { background: #fafbff; }
+  .month-table tbody tr.me { background: #eef2ff; }
+  .month-table tbody tr.me:hover { background: #e5eaff; }
+  .month-table tfoot td { background: #f9fafb; border-top: 2px solid #e8eaf0; }
+  .amount-pill { display: inline-block; font-size: 11.5px; font-weight: 800;
+    padding: 4px 10px; border-radius: 20px; font-variant-numeric: tabular-nums;
+    white-space: nowrap; }
+  .amount-pill.ontime { background: #dcfce7; color: #166534; border: 1px solid #86efac; }
+  .amount-pill.late { background: #fee2e2; color: #991b1b; border: 1px solid #fca5a5; }
+
+  .toast { position: fixed; left: 50%; bottom: 40px; transform: translate(-50%, 120px);
+    background: #16a34a; color: #fff; padding: 14px 22px; border-radius: 14px;
+    font-size: 14px; font-weight: 600; box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+    opacity: 0; transition: all 0.3s ease; pointer-events: none; z-index: 999;
+    white-space: nowrap; max-width: 90vw; }
+  .toast.show { transform: translate(-50%, 0); opacity: 1; }
+  .toast.error { background: #dc2626; }
+  .toast.purple { background: #7c3aed; }
+  .toast.warn { background: #f59e0b; }
+
+  .offline-badge { position: fixed; top: 12px; left: 50%; transform: translateX(-50%);
+    background: #dc2626; color: #fff; padding: 6px 14px; border-radius: 20px;
+    font-size: 11px; font-weight: 700; z-index: 1000;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2); display: none; }
+  .offline-badge.show { display: block; }
+
+  .hidden { display: none !important; }
+  .logout-card { display: flex; gap: 10px; margin: 24px 0 0; }
+  .logout-btn { flex: 1; padding: 14px; border-radius: 12px; font-size: 14px;
+    font-weight: 700; border: none; cursor: pointer;
+    background: #fee2e2; color: #dc2626; font-family: inherit;
+    display: flex; align-items: center; justify-content: center; gap: 6px; }
+  .logout-btn:active { transform: scale(0.98); }
+
+  @media (max-width: 420px) {
+    .clock-bar { flex-direction: column; align-items: flex-start; }
+    .clock-bar .due { text-align: left; min-width: 0; }
+    .option .opt-amount { font-size: 18px; }
+  }
+</style>
+</head>
+<body>
+
+  <div class="offline-badge" id="offlineBadge">📵 Offline</div>
+
+  <!-- AUTH -->
+  <div id="authScreen">
+    <div class="lang-row">
+      <select class="lang-select" id="langSelectAuth" onchange="setLanguage(this.value)"></select>
+    </div>
+    <div class="logo">AM</div>
+    <div class="login-title" data-i18n="appName">Afoosha Miiltoo</div>
+    <div class="login-sub" id="authSub">Log in with your name, father name, and password</div>
+
+    <div class="tabs">
+      <button class="tab active" id="tabLogin" data-i18n="login">Log In</button>
+      <button class="tab" id="tabSignup" data-i18n="signup">Sign Up</button>
+    </div>
+
+    <!-- LOGIN FORM -->
+    <div id="loginForm">
+      <div class="field">
+        <label data-i18n="nameOnly">Name</label>
+        <input id="loginName" type="text" data-i18n-ph="phFirstName" placeholder="e.g. Bayisa" autocomplete="given-name">
+      </div>
+      <div class="field">
+        <label data-i18n="fatherName">Father Name</label>
+        <input id="loginFather" type="text" data-i18n-ph="phFatherName" placeholder="e.g. Batiri" autocomplete="family-name">
+      </div>
+      <div class="field">
+        <label data-i18n="password">Password</label>
+        <div class="pw-wrap">
+          <input id="loginPassword" type="password" data-i18n-ph="phPassword" placeholder="Your password" autocomplete="current-password">
+          <button class="pw-toggle" id="pwToggleLogin" type="button">👁</button>
+        </div>
+      </div>
+      <button class="btn btn-primary" id="loginBtn" style="margin-top:10px;" data-i18n="login">Log In</button>
+    </div>
+
+    <!-- SIGN UP FORM WITH SUB-TABS -->
+    <div id="signupForm" class="hidden">
+      <div class="sub-tabs">
+        <button class="on" id="subTabExisting" data-i18n="existingMember">Existing Member</button>
+        <button id="subTabNew" data-i18n="newMember">New Member</button>
+      </div>
+
+      <!-- EXISTING MEMBER — Change Password -->
+      <div id="existingForm">
+        <div class="field">
+          <label data-i18n="nameOnly">Name</label>
+          <input id="cpName" type="text" data-i18n-ph="phFirstName" placeholder="e.g. Bayisa">
+        </div>
+        <div class="field">
+          <label data-i18n="fatherName">Father Name</label>
+          <input id="cpFather" type="text" data-i18n-ph="phFatherName" placeholder="e.g. Batiri">
+        </div>
+        <div class="field">
+          <label data-i18n="oldPassword">Old Password</label>
+          <div class="pw-wrap">
+            <input id="cpOld" type="password" data-i18n-ph="phOldPassword" placeholder="Your current password">
+            <button class="pw-toggle" id="pwToggleOld" type="button">👁</button>
+          </div>
+        </div>
+        <div class="field">
+          <label data-i18n="newPassword">New Password</label>
+          <div class="pw-wrap">
+            <input id="cpNew" type="password" data-i18n-ph="phNewPassword" placeholder="New password (min 4)">
+            <button class="pw-toggle" id="pwToggleNew" type="button">👁</button>
+          </div>
+        </div>
+        <div class="field">
+          <label data-i18n="confirmNewPassword">Confirm New Password</label>
+          <div class="pw-wrap">
+            <input id="cpNew2" type="password" data-i18n-ph="phConfirmNewPassword" placeholder="Re-enter new password">
+            <button class="pw-toggle" id="pwToggleNew2" type="button">👁</button>
+          </div>
+        </div>
+        <button class="btn btn-warning" id="changePassBtn" style="margin-top:10px;" data-i18n="changePasswordBtn">Change Password</button>
+      </div>
+
+      <!-- NEW MEMBER — Sign Up -->
+      <div id="newMemberForm" class="hidden">
+        <div class="field">
+          <label data-i18n="fullName">Full Name</label>
+          <input id="signupName" type="text" data-i18n-ph="phFullName" placeholder="e.g. Sara Bekele Tola" autocomplete="name">
+        </div>
+        <div class="field">
+          <label data-i18n="password">Password</label>
+          <div class="pw-wrap">
+            <input id="signupPassword" type="password" data-i18n-ph="phNewPassword" placeholder="Create a password (min 4)" autocomplete="new-password">
+            <button class="pw-toggle" id="pwToggleSignup" type="button">👁</button>
+          </div>
+        </div>
+        <div class="field">
+          <label data-i18n="confirmPassword">Confirm Password</label>
+          <div class="pw-wrap">
+            <input id="signupConfirm" type="password" data-i18n-ph="phConfirmPassword" placeholder="Re-enter password" autocomplete="new-password">
+            <button class="pw-toggle" id="pwToggleConfirm" type="button">👁</button>
+          </div>
+        </div>
+        <button class="btn btn-success" id="signupBtn" style="margin-top:10px;" data-i18n="submitRequest">Submit Request</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- DASHBOARD -->
+  <div class="wrap hidden" id="appScreen">
+    <div class="topbar">
+      <div style="flex:1;min-width:0;">
+        <h1 data-i18n="appName">Afoosha Miiltoo</h1>
+        <div class="user" id="userLine"></div>
+      </div>
+      <select class="lang-select" id="langSelectApp" onchange="setLanguage(this.value)"></select>
+      <div class="avatar-top" id="userAvatar">?</div>
+    </div>
+
+    <div class="clock-bar">
+      <div>
+        <div class="greg" id="liveGreg"></div>
+        <div class="eth" id="liveEth"></div>
+        <div class="time" id="liveTime"></div>
+      </div>
+      <div class="due" id="dueInfo"></div>
+    </div>
+
+    <div class="pay-card" id="payCard">
+      <div class="label" id="payCardLabel">Your Contribution</div>
+      <div class="cycle" id="cycleName"></div>
+      <div class="pay-status" id="payStatus">Not Paid</div>
+
+      <div class="month-bar" id="monthBar"></div>
+      <div class="month-hint">
+        <span class="dot green"></span> paid
+        <span class="dot red" style="margin-left:10px;"></span> past unpaid
+        <span style="margin-left:10px;">· tap a month to pay it</span>
+      </div>
+
+      <div class="options-row" id="optionsRow"></div>
+    </div>
+
+    <div class="stat-row">
+      <div class="stat paid"><div class="num" id="statPaid">0</div><div class="lbl">Paid</div></div>
+      <div class="stat late"><div class="num" id="statLate">0</div><div class="lbl">Late</div></div>
+      <div class="stat due"><div class="num" id="statDue">0</div><div class="lbl">Due</div></div>
+      <div class="stat"><div class="num" id="statTotal">0</div><div class="lbl">Total</div></div>
+    </div>
+
+    <div class="section-title" id="tableTitle">
+      <span>Community Payment Table</span>
+      <button class="admin-toggle" id="adminToggle" style="display:none;">🔧 Admin Mode: ON</button>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr id="tableHeadRow">
+            <th style="width:44px;text-align:center;">S/N</th>
+            <th>Member</th>
+            <th>Status</th>
+            <th>Amount</th>
+            <th>Paid At</th>
+          </tr>
+        </thead>
+        <tbody id="tableBody"></tbody>
+      </table>
+    </div>
+
+    <div class="section-title" id="completedTitle">
+      <span>✓ Payment Completed — 2019 E.C.</span>
+      <span class="badge-count" id="completedCount">0</span>
+    </div>
+    <div id="completedWrap"></div>
+
+    <!-- SUB-NAV -->
+    <div class="tab-subnav" id="subNav" style="margin-top:24px;">
+      <button class="on" data-sub="files" data-i18n="files">Files</button>
+      <button data-sub="notes" data-i18n="notes">Notes</button>
+      <button data-sub="family" data-i18n="family">Family</button>
+    </div>
+
+    <!-- FILES -->
+    <div id="filesSection">
+      <div class="file-upload-card">
+        <h3 data-i18n="uploadFile">Upload a File</h3>
+        <div class="sub" data-i18n="uploadFileSub">Share documents, photos, or receipts with the community</div>
+        <label class="file-drop" id="fileDrop" for="fileInput">
+          <span class="icon">📎</span>
+          <span data-i18n="tapToChoose">Tap to choose a file</span>
+          <div class="hint" data-i18n="fileHint">Max 5 MB · PDF, Word, Excel, image, text</div>
+        </label>
+        <input type="file" id="fileInput" style="display:none">
+        <div id="filePicked" style="font-size:12px;color:#6b7280;margin-top:10px;"></div>
+        <div style="display:flex;gap:8px;margin-top:12px;justify-content:flex-end;">
+          <button class="btn btn-ghost" id="fileCancelBtn" style="display:none;width:auto;padding:10px 18px;font-size:13px;" data-i18n="cancel">Cancel</button>
+          <button class="btn btn-primary" id="fileUploadBtn" style="display:none;width:auto;padding:10px 22px;font-size:13px;" data-i18n="upload">Upload</button>
+        </div>
+      </div>
+
+      <div class="section-title">
+        <span data-i18n="sharedFiles">Shared Files</span>
+        <span class="badge-count empty" id="filesCount">0</span>
+      </div>
+      <div class="file-list" id="filesList"></div>
+    </div>
+
+    <!-- NOTES -->
+    <div id="notesSection" class="hidden">
+      <div class="note-editor">
+        <h3 data-i18n="writeNote">Write a Note</h3>
+        <div class="sub" data-i18n="noteSub">Announcements, reminders, or messages for the community</div>
+        <textarea id="noteInput" data-i18n-ph="notePh" placeholder="Write your note here…"></textarea>
+        <div class="row-actions">
+          <button class="btn btn-primary" id="notePostBtn" style="width:auto;padding:10px 22px;font-size:13px;" data-i18n="postNote">Post Note</button>
+        </div>
+      </div>
+
+      <div class="section-title">
+        <span data-i18n="communityNotes">Community Notes</span>
+        <span class="badge-count empty" id="notesCount">0</span>
+      </div>
+      <div id="notesList"></div>
+    </div>
+
+    <!-- FAMILY -->
+    <div id="familySection" class="hidden">
+      <div class="family-toolbar">
+        <button class="btn btn-primary" id="familyAddBtn">
+          <span>➕</span>
+          <span data-i18n="addMember">Add Member</span>
+        </button>
+        <button class="btn btn-ghost" id="familyExportBtn">
+          <span>⬇️</span>
+          <span data-i18n="exportExcel">Export Excel</span>
+        </button>
+        <button class="btn btn-ghost" id="familyImportBtn">
+          <span>⬆️</span>
+          <span data-i18n="importExcel">Import Excel</span>
+        </button>
+        <input type="file" id="familyImportInput" accept=".csv,.txt" style="display:none">
+      </div>
+
+      <div class="family-form" id="familyForm">
+        <input type="hidden" id="familyEditId">
+        <div class="grid">
+          <div>
+            <label data-i18n="fullName">Full Name</label>
+            <input id="familyFullName" type="text" placeholder="e.g. Sara Bekele Tola">
+          </div>
+          <div>
+            <label data-i18n="gender">Gender</label>
+            <select id="familyGender">
+              <option value="Male">♂ Male</option>
+              <option value="Female">♀ Female</option>
+            </select>
+          </div>
+          <div>
+            <label data-i18n="phoneNumber">Phone Number</label>
+            <input id="familyPhone" type="tel" placeholder="+251 9XX XXX XXX">
+          </div>
+          <div>
+            <label data-i18n="relation">Relation / Family</label>
+            <select id="familyRelation">
+              <option value="1. Head of family">1. Head of family</option>
+              <option value="2. Spouse">2. Spouse</option>
+              <option value="3. Son">3. Son</option>
+              <option value="4. Daughter">4. Daughter</option>
+              <option value="5. Father">5. Father</option>
+              <option value="6. Mother">6. Mother</option>
+              <option value="7. Brother">7. Brother</option>
+              <option value="8. Sister">8. Sister</option>
+              <option value="9. Grandfather">9. Grandfather</option>
+              <option value="10. Grandmother">10. Grandmother</option>
+              <option value="11. Uncle">11. Uncle</option>
+              <option value="12. Aunt">12. Aunt</option>
+              <option value="13. Cousin">13. Cousin</option>
+              <option value="14. Nephew">14. Nephew</option>
+              <option value="15. Niece">15. Niece</option>
+              <option value="16. Guardian">16. Guardian</option>
+              <option value="17. Other relative">17. Other relative</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-actions">
+          <button class="btn btn-ghost" id="familyCancelBtn" data-i18n="cancel">Cancel</button>
+          <button class="btn btn-primary" id="familySaveBtn" data-i18n="save">Save</button>
+        </div>
+      </div>
+
+      <input class="family-search" id="familySearch" type="text" placeholder="🔍 Search by name or phone…">
+
+      <div class="section-title">
+        <span data-i18n="familyList">Member Family List</span>
+        <span class="badge-count empty" id="familyCount">0</span>
+      </div>
+
+      <div id="familyTablesWrap"></div>
+    </div>
+
+    <div class="logout-card">
+      <button class="logout-btn" id="logoutBtn">
+        <span>🚪</span>
+        <span data-i18n="logout">Log out</span>
+      </button>
+    </div>
+  </div>
+
+  <div class="toast" id="toast">Completed ✓</div>
+  <div id="modalRoot"></div>
+
+<script>
+/* ==========================================================
+   ETHIOPIAN CALENDAR
+   ========================================================== */
+const ETH_EPOCH = 1723856;
+const ETH_MONTHS = [
+  "Meskerem","Tikimt","Hidar","Tahsas","Tir","Yekatit",
+  "Megabit","Miazia","Ginbot","Sene","Hamle","Nehase"
+];
+const ETH_MONTHS_SHORT = ["Mes","Tik","Hid","Tah","Tir","Yek","Meg","Mia","Gin","Sen","Ham","Neh"];
+
+const FIXED_YEAR = 2019;
+const PENALTY_START_YEAR  = 2019;
+const PENALTY_START_MONTH = 3;
+
+function gregToJDN(y, m, d) {
+  const a = Math.floor((14 - m) / 12);
+  const yy = y + 4800 - a;
+  const mm = m + 12 * a - 3;
+  return d + Math.floor((153 * mm + 2) / 5) + 365 * yy +
+         Math.floor(yy / 4) - Math.floor(yy / 100) + Math.floor(yy / 400) - 32045;
+}
+function jdnToGreg(jdn) {
+  const a = jdn + 32044;
+  const b = Math.floor((4 * a + 3) / 146097);
+  const c = a - Math.floor(146097 * b / 4);
+  const d = Math.floor((4 * c + 3) / 1461);
+  const e = c - Math.floor(1461 * d / 4);
+  const m = Math.floor((5 * e + 2) / 153);
+  return { d: e - Math.floor((153 * m + 2) / 5) + 1,
+           m: m + 3 - 12 * Math.floor(m / 10),
+           y: 100 * b + d - 4800 + Math.floor(m / 10) };
+}
+function ethToJDN(y, m, d) {
+  return y * 365 + Math.floor(y / 4) + (m - 1) * 30 + (d - 1) + ETH_EPOCH;
+}
+function jdnToEth(jdn) {
+  const r = (jdn - ETH_EPOCH) % 1461;
+  const n = (r % 365) + 365 * Math.floor(r / 1460);
+  return { y: 4 * Math.floor((jdn - ETH_EPOCH) / 1461) + Math.floor(r / 365) - Math.floor(r / 1460),
+           m: Math.floor(n / 30) + 1,
+           d: (n % 30) + 1 };
+}
+const gregToEth = (y, m, d) => jdnToEth(gregToJDN(y, m, d));
+function normalizeEth(eth) {
+  if (eth.m === 13) return { y: eth.y, m: 12, d: 30 + eth.d };
+  return eth;
+}
+function getEthToday(now = new Date()) {
+  const real = normalizeEth(gregToEth(now.getFullYear(), now.getMonth() + 1, now.getDate()));
+  return { y: FIXED_YEAR, m: real.m, d: real.d };
+}
+
+function isPenaltyActive(y, m) {
+  if (y < PENALTY_START_YEAR) return false;
+  if (y === PENALTY_START_YEAR && m < PENALTY_START_MONTH) return false;
+  return monthPosition(y, m) === "past";
+}
+
+/* Migration: repair old payment records */
+(function fixPaymentAmounts() {
+  try {
+    const pay = JSON.parse(localStorage.getItem("milto_pay_v9") || "{}");
+    let changed = false;
+    Object.keys(pay).forEach(cycleKey => {
+      const cyc = pay[cycleKey];
+      if (!cyc || typeof cyc !== "object") return;
+      Object.keys(cyc).forEach(name => {
+        const rec = cyc[name];
+        if (!rec || typeof rec !== "object") return;
+        const raw = String(rec.amount || "").replace(/[^0-9]/g, "");
+        const n = parseInt(raw, 10);
+        if (isNaN(n) || (n !== 200 && n !== 250)) {
+          rec.amount = 200;
+          changed = true;
+        } else if (typeof rec.amount !== "number") {
+          rec.amount = n;
+          changed = true;
+        }
+      });
+    });
+    if (changed) localStorage.setItem("milto_pay_v9", JSON.stringify(pay));
+  } catch (e) { console.warn("Payment migration skipped:", e); }
+})();
+
+/* ==========================================================
+   MEMBERS
+   ========================================================== */
+const DEFAULT_MEMBERS = [
+  { name: "Bayisa Batiri Kebeba",  role: "Leader",      password: "milto123" },
+  { name: "Bayu Abune Gebre",      role: "Writer",      password: "milto123" },
+  { name: "Moybon Yedate Kumsa",   role: "Accountant",  password: "milto123" },
+  { name: "Samuel Daba Gedefa",    role: "Member",      password: "milto123" },
+  { name: "Chala Dufera Fufa",     role: "Member",      password: "milto123" },
+  { name: "Abera Demise Her'yu",   role: "Member",      password: "milto123" },
+  { name: "Mosisa Gedefa",         role: "Member",      password: "milto123" },
+  { name: "Temirat Abera Regesa",  role: "Member",      password: "milto123" },
+  { name: "Merga Tesfaye Wekjira", role: "Member",      password: "milto123" },
+  { name: "Isayas Ababa Gudete",   role: "Member",      password: "milto123" },
+  { name: "Daniel Fufa Leta",      role: "Member",      password: "milto123" },
+  { name: "Bekele Fufa",           role: "Member",      password: "milto123" },
+  { name: "Demto Debela Deme",     role: "Member",      password: "milto123" },
+  { name: "Diriba Hordofa Keneni", role: "Member",      password: "milto123" },
+  { name: "Ijara Hordofa Keneni",  role: "Member",      password: "milto123" },
+  { name: "Diriba Megersa Deme",   role: "Evaluator",   password: "milto123" },
+  { name: "Chala Duguma Geredo",   role: "Member",      password: "milto123" },
+  { name: "Aduna Tola",            role: "Member",      password: "milto123" },
+  { name: "Abera Abdissa Tura",    role: "Sub-Leader",  password: "milto123" },
+  { name: "Gari Bekela Tafa",      role: "Member",      password: "milto123" },
+  { name: "Teshome Gemechu Diriba",role: "Member",      password: "milto123" },
+  { name: "Mesfin Hirko Itisa",    role: "Auditor",     password: "milto123" },
+  { name: "Fayisa Regasa",         role: "Member",      password: "milto123" }
+];
+
+const BASE_FEE = 200;
+const PENALTY  = 50;
+const DUE_DAY  = 30;
+const LEADER_NAME = "Bayisa Batiri Kebeba";
+
+/* Helper: split full name into [first, father, grand] */
+function splitFullName(fullName) {
+  const parts = String(fullName || "").trim().split(/\s+/).filter(Boolean);
+  return { name: parts[0] || "", fatherName: parts[1] || "", grandName: parts[2] || "", all: parts };
+}
+/* Match: does fullName start with name + fatherName? */
+function matchNameFather(fullName, inputName, inputFather) {
+  const parts = String(fullName || "").trim().split(/\s+/).filter(Boolean);
+  if (parts.length < 2) return false;
+  const n = String(inputName || "").trim().toLowerCase();
+  const f = String(inputFather || "").trim().toLowerCase();
+  if (!n || !f) return false;
+  return parts[0].toLowerCase() === n && parts[1].toLowerCase() === f;
+}
+
+function getAllMembers() {
+  return [...DEFAULT_MEMBERS, ...getCustomMembers()];
+}
+function getCustomMembers() {
+  return JSON.parse(localStorage.getItem("milto_custom_members_v3") || "[]");
+}
+function setCustomMembers(list) {
+  localStorage.setItem("milto_custom_members_v3", JSON.stringify(list));
+}
+
+const PERMIT_KEY = "milto_permits_v1";
+function getPermits() { return JSON.parse(localStorage.getItem(PERMIT_KEY) || "{}"); }
+function setPermits(p) { localStorage.setItem(PERMIT_KEY, JSON.stringify(p)); }
+function hasPermit(name) {
+  const permits = getPermits();
+  return permits[name] !== false;
+}
+function setPermit(name, allowed) {
+  const permits = getPermits();
+  if (allowed) delete permits[name];
+  else permits[name] = false;
+  setPermits(permits);
+}
+
+const FILES_KEY = "milto_files_v1";
+const NOTES_KEY = "milto_notes_v1";
+const FAMILY_KEY = "milto_family_v1";
+const MAX_FILE_SIZE = 5 * 1024 * 1024;
+
+const getFiles = () => JSON.parse(localStorage.getItem(FILES_KEY) || "[]");
+const setFiles = (list) => localStorage.setItem(FILES_KEY, JSON.stringify(list));
+const getNotes = () => JSON.parse(localStorage.getItem(NOTES_KEY) || "[]");
+const setNotes = (list) => localStorage.setItem(NOTES_KEY, JSON.stringify(list));
+
+const getFamily = () => {
+  const raw = localStorage.getItem(FAMILY_KEY) || "[]";
+  try {
+    const parsed = JSON.parse(raw);
+    if (Array.isArray(parsed) && parsed.length && parsed[0].members) {
+      const flat = [];
+      parsed.forEach(t => (t.members || []).forEach(m => flat.push(m)));
+      localStorage.setItem(FAMILY_KEY, JSON.stringify(flat));
+      return flat;
+    }
+    return Array.isArray(parsed) ? parsed : [];
+  } catch { return []; }
+};
+const setFamily = (list) =>
+  localStorage.setItem(FAMILY_KEY, JSON.stringify(list));
+
+const pad = (n) => String(n).padStart(2, "0");
+const colorFor = (s) => {
+  let h = 0;
+  for (let i = 0; i < s.length; i++) h = s.charCodeAt(i) + ((h << 5) - h);
+  return `hsl(${Math.abs(h) % 360}, 58%, 52%)`;
+};
+const initials = (n) => n.split(" ").map(w => w[0]).slice(0, 2).join("").toUpperCase();
+
+function roleClass(role) {
+  if (role === "Leader") return "t-role leader";
+  if (role === "Admin") return "t-role admin";
+  if (["Writer","Accountant","Auditor","Sub-Leader","Evaluator"].includes(role)) return "t-role officer";
+  return "t-role";
+}
+function fmtDateTime(ts) {
+  const d = new Date(ts);
+  return {
+    date: d.toLocaleDateString("en-GB", { day: "2-digit", month: "short", year: "numeric" }),
+    time: `${pad(d.getHours())}:${pad(d.getMinutes())}`
+  };
+}
+function monthPosition(y, m) {
+  const eth = getEthToday();
+  if (y < eth.y) return "past";
+  if (y > eth.y) return "future";
+  if (m < eth.m) return "past";
+  if (m > eth.m) return "future";
+  return "current";
+}
+function amountForMonth(y, m) {
+  return isPenaltyActive(y, m) ? BASE_FEE + PENALTY : BASE_FEE;
+}
+function getCycleInfo(user) {
+  const eth = getEthToday();
+  const cy = eth.y, cm = eth.m, cd = eth.d;
+  return {
+    eth, cycleY: cy, cycleM: cm,
+    cycleKey: `${cy}-${pad(cm)}`,
+    cycleLabel: `${ETH_MONTHS[cm - 1]} ${cy}`,
+    daysSinceDue: cd - DUE_DAY, penalty: false,
+    isEarly: cd < DUE_DAY, onTime: cd === DUE_DAY,
+    isPastMonth: false, isCustom: false
+  };
+}
+function getCustomCycle(user, y, m) {
+  const pay = getPay();
+  const key = `${y}-${pad(m)}`;
+  const rec = pay[key]?.[user.name];
+  if (rec) return null;
+  const penalty = isPenaltyActive(y, m);
+  const eth = getEthToday();
+  return {
+    eth, cycleY: y, cycleM: m, cycleKey: key,
+    cycleLabel: `${ETH_MONTHS[m - 1]} ${y}`,
+    daysSinceDue: penalty ? 30 : (y === eth.y && m === eth.m ? eth.d - DUE_DAY : 0),
+    penalty, isEarly: !penalty, onTime: false,
+    isPastMonth: penalty, isCustom: true
+  };
+}
+function getMemberStatus(member) {
+  if (!hasPermit(member.name)) {
+    return { status: "Cancelled", amount: 0, paidAt: null };
+  }
+  const eth = getEthToday();
+  const cy = eth.y, cm = eth.m;
+  const pay = getPay();
+  for (let m = 1; m < cm; m++) {
+    const key = `${cy}-${pad(m)}`;
+    if (!pay[key]?.[member.name]) {
+      const lateAmount = isPenaltyActive(cy, m) ? BASE_FEE + PENALTY : BASE_FEE;
+      return { status: "Late", amount: lateAmount, paidAt: null };
+    }
+  }
+  const currentKey = `${cy}-${pad(cm)}`;
+  const rec = pay[currentKey]?.[member.name];
+  if (rec) return { status: "Paid", amount: rec.amount, paidAt: rec.paidAt };
+  return { status: "Due", amount: BASE_FEE, paidAt: null };
+}
+
+const getUser  = () => JSON.parse(localStorage.getItem("milto_user") || "null");
+const setUser  = (u) => localStorage.setItem("milto_user", JSON.stringify(u));
+const clearUser = () => localStorage.removeItem("milto_user");
+const getPay  = () => JSON.parse(localStorage.getItem("milto_pay_v9") || "{}");
+const setPay  = (p) => localStorage.setItem("milto_pay_v9", JSON.stringify(p));
+
+function fileIcon(name, type) {
+  const n = (name || "").toLowerCase();
+  if (type && type.startsWith("image/")) return "🖼️";
+  if (type && type.startsWith("audio/")) return "🎵";
+  if (type && type.startsWith("video/")) return "🎬";
+  if (n.endsWith(".pdf")) return "📕";
+  if (n.endsWith(".doc") || n.endsWith(".docx")) return "📘";
+  if (n.endsWith(".xls") || n.endsWith(".xlsx")) return "📗";
+  if (n.endsWith(".ppt") || n.endsWith(".pptx")) return "📙";
+  if (n.endsWith(".txt") || n.endsWith(".md") || n.endsWith(".csv")) return "📄";
+  if (n.endsWith(".zip") || n.endsWith(".rar")) return "🗜️";
+  return "📎";
+}
+function fmtFileSize(b) {
+  if (b < 1024) return b + " B";
+  if (b < 1048576) return (b / 1024).toFixed(1) + " KB";
+  return (b / 1048576).toFixed(2) + " MB";
+}
+function shortName(n, m = 30) {
+  const s = String(n || "");
+  if (s.length <= m) return s;
+  const dot = s.lastIndexOf(".");
+  if (dot > 0 && s.length - dot <= 6) {
+    return s.slice(0, dot).slice(0, m - s.slice(dot).length - 1) + "…" + s.slice(dot);
+  }
+  return s.slice(0, m - 1) + "…";
+}
+function dataURLtoBlob(dataURL) {
+  try {
+    const parts = dataURL.split(",");
+    const mime = parts[0].match(/:(.*?);/)[1];
+    const bin = atob(parts[1]);
+    const len = bin.length;
+    const arr = new Uint8Array(len);
+    for (let i = 0; i < len; i++) arr[i] = bin.charCodeAt(i);
+    return new Blob([arr], { type: mime });
+  } catch (e) { return null; }
+}
+function downloadDataURL(dataURL, filename) {
+  try {
+    const blob = dataURLtoBlob(dataURL);
+    if (!blob) throw new Error("blob");
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url; a.download = filename;
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+    setTimeout(() => URL.revokeObjectURL(url), 2000);
+  } catch (e) {
+    const a = document.createElement("a");
+    a.href = dataURL; a.download = filename;
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  }
+}
+function openFilePreview(dataURL, name, type) {
+  const n = (name || "").toLowerCase();
+  const isImage = type && type.startsWith("image/");
+  const isPDF = type === "application/pdf" || n.endsWith(".pdf");
+  const isAudio = type && type.startsWith("audio/");
+  const isVideo = type && type.startsWith("video/");
+  let inner = "";
+  if (isImage) inner = `<img src="${dataURL}" style="max-width:100%;max-height:70vh;border-radius:12px;display:block;margin:auto;">`;
+  else if (isPDF) inner = `<iframe src="${dataURL}" style="width:100%;height:70vh;border:none;border-radius:12px;background:#f8fafc;"></iframe>`;
+  else if (isAudio) inner = `<audio controls style="width:100%;" src="${dataURL}"></audio>`;
+  else if (isVideo) inner = `<video controls style="max-width:100%;max-height:70vh;border-radius:12px;" src="${dataURL}"></video>`;
+  else inner = `<div style="text-align:center;padding:30px 10px;"><div style="font-size:52px;opacity:.5;">${fileIcon(name, type)}</div><div style="margin-top:10px;font-size:13px;color:#6b7280;">Preview not available — tap download</div></div>`;
+  const overlay = document.createElement("div");
+  overlay.style.cssText = "position:fixed;inset:0;background:rgba(15,23,42,.7);backdrop-filter:blur(6px);z-index:2000;display:flex;align-items:center;justify-content:center;padding:14px;";
+  overlay.innerHTML = `
+    <div style="background:#fff;border-radius:18px;padding:16px;width:100%;max-width:720px;max-height:92vh;overflow:auto;box-shadow:0 20px 60px rgba(0,0,0,.35);">
+      <div style="display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:12px;">
+        <div style="font-size:13px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;flex:1;">📎 ${shortName(name, 40)}</div>
+        <button id="pfClose" style="border:none;background:#eef1f8;color:#4f6ef7;font-size:13px;font-weight:700;padding:8px 14px;border-radius:10px;cursor:pointer;">Close</button>
+        <button id="pfDL" style="border:none;background:#dcfce7;color:#16a34a;font-size:13px;font-weight:700;padding:8px 14px;border-radius:10px;cursor:pointer;">⬇️</button>
+      </div>
+      <div>${inner}</div>
+    </div>`;
+  document.body.appendChild(overlay);
+  overlay.querySelector("#pfClose").onclick = () => overlay.remove();
+  overlay.querySelector("#pfDL").onclick = () => downloadDataURL(dataURL, name);
+  overlay.onclick = (e) => { if (e.target === overlay) overlay.remove(); };
+}
+
+/* ==========================================================
+   DOM REFS
+   ========================================================== */
+const $ = (id) => document.getElementById(id);
+const authScreen = $("authScreen"), appScreen = $("appScreen");
+const tabLogin = $("tabLogin"), tabSignup = $("tabSignup");
+const loginForm = $("loginForm"), signupForm = $("signupForm");
+const authSub = $("authSub");
+const subTabExisting = $("subTabExisting"), subTabNew = $("subTabNew");
+const existingForm = $("existingForm"), newMemberForm = $("newMemberForm");
+
+const loginName = $("loginName"), loginFather = $("loginFather"), loginPassword = $("loginPassword");
+const loginBtn = $("loginBtn");
+const cpName = $("cpName"), cpFather = $("cpFather"), cpOld = $("cpOld"), cpNew = $("cpNew"), cpNew2 = $("cpNew2");
+const changePassBtn = $("changePassBtn");
+const signupName = $("signupName");
+const signupPassword = $("signupPassword"), signupConfirm = $("signupConfirm");
+const signupBtn = $("signupBtn");
+
+const userLine = $("userLine"), userAvatar = $("userAvatar");
+const liveGreg = $("liveGreg"), liveEth = $("liveEth"), liveTime = $("liveTime"), dueInfo = $("dueInfo");
+const payCard = $("payCard"), cycleName = $("cycleName"), payStatus = $("payStatus");
+const payCardLabel = $("payCardLabel");
+const monthBar = $("monthBar");
+const optionsRow = $("optionsRow");
+const statPaid = $("statPaid"), statDue = $("statDue"), statLate = $("statLate"), statTotal = $("statTotal");
+const tableBody = $("tableBody"), tableTitle = $("tableTitle");
+const tableHeadRow = $("tableHeadRow");
+const adminToggle = $("adminToggle");
+const completedTitle = $("completedTitle"), completedWrap = $("completedWrap");
+const logoutBtn = $("logoutBtn"), toast = $("toast");
+const offlineBadge = $("offlineBadge");
+
+const subNav = $("subNav");
+const filesSection = $("filesSection");
+const notesSection = $("notesSection");
+const fileDrop = $("fileDrop"), fileInput = $("fileInput");
+const filePicked = $("filePicked");
+const fileCancelBtn = $("fileCancelBtn"), fileUploadBtn = $("fileUploadBtn");
+const filesList = $("filesList"), filesCount = $("filesCount");
+const noteInput = $("noteInput"), notePostBtn = $("notePostBtn");
+const notesList = $("notesList"), notesCount = $("notesCount");
+
+const familySection = $("familySection");
+const familyAddBtn = $("familyAddBtn");
+const familyExportBtn = $("familyExportBtn");
+const familyImportBtn = $("familyImportBtn");
+const familyImportInput = $("familyImportInput");
+const familyForm = $("familyForm");
+const familyEditId = $("familyEditId");
+const familyFullName = $("familyFullName");
+const familyGender = $("familyGender");
+const familyPhone = $("familyPhone");
+const familyRelation = $("familyRelation");
+const familyCancelBtn = $("familyCancelBtn");
+const familySaveBtn = $("familySaveBtn");
+const familySearch = $("familySearch");
+const familyCount = $("familyCount");
+
+let currentCycle = null;
+let selectedMonth = null;
+let lastPaid = null;
+let lastCancelled = null;
+let adminMode = false;
+let completedOpenMonth = null;
+let ui = { authTab: 'login', signupMode: 'existing' };
+
+/* PERMISSIONS */
+function isLeader() {
+  const u = getUser();
+  return u && u.name === LEADER_NAME;
+}
+function canManagePermits() { return isLeader(); }
+function canDelete() { return isLeader(); }
+function canEdit() { return !!getUser(); }
+
+/* Universal confirm dialog */
+function askConfirm(title, message, onYes, yesLabel, danger){
+  const root = document.getElementById('modalRoot');
+  if (!root) { onYes && onYes(); return; }
+  root.innerHTML = `
+    <div style="position:fixed;inset:0;background:rgba(15,23,42,.55);backdrop-filter:blur(6px);
+                z-index:3000;display:flex;align-items:center;justify-content:center;padding:18px;">
+      <div style="background:#fff;border-radius:18px;padding:22px;width:100%;max-width:400px;
+                  box-shadow:0 20px 60px rgba(0,0,0,.35);">
+        <h3 style="font-size:17px;font-weight:800;margin-bottom:8px;">${escapeHTML(title||"Confirm")}</h3>
+        <p style="font-size:14px;color:#6b7280;line-height:1.5;white-space:pre-wrap;margin-bottom:18px;">
+          ${escapeHTML(message||"")}
+        </p>
+        <div style="display:flex;gap:10px;justify-content:flex-end;">
+          <button id="cfNo" style="padding:11px 18px;border-radius:10px;border:none;
+                  background:#eef1f8;color:#4f6ef7;font-size:14px;font-weight:700;cursor:pointer;
+                  font-family:inherit;">Cancel</button>
+          <button id="cfYes" style="padding:11px 18px;border-radius:10px;border:none;
+                  background:${danger ? "#dc2626" : "#4f6ef7"};color:#fff;font-size:14px;
+                  font-weight:700;cursor:pointer;font-family:inherit;">${escapeHTML(yesLabel||"OK")}</button>
+        </div>
+      </div>
+    </div>`;
+  const close = () => { root.innerHTML = ""; };
+  document.getElementById("cfNo").onclick = close;
+  document.getElementById("cfYes").onclick = () => { close(); onYes && onYes(); };
+}
+window.askConfirm = askConfirm;
+
+function showToast(msg, isErr = false, purple = false, warn = false) {
+  toast.textContent = msg;
+  toast.classList.toggle("error", isErr);
+  toast.classList.toggle("purple", purple);
+  toast.classList.toggle("warn", warn);
+  toast.classList.add("show");
+  clearTimeout(showToast._t);
+  showToast._t = setTimeout(() => toast.classList.remove("show"), 2600);
+}
+
+function escapeHTML(s) {
+  return String(s || "").replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+}
+function authMsg(type, text){
+  showToast(text, type === 'err');
+}
+
+/* ==========================================================
+   AUTH UI
+   ========================================================== */
+function attachPwToggle(btn, input) {
+  if (!btn || !input) return;
+  btn.addEventListener("click", () => {
+    const isPw = input.type === "password";
+    input.type = isPw ? "text" : "password";
+    btn.textContent = isPw ? "🙈" : "👁";
+  });
+}
+attachPwToggle($("pwToggleLogin"), loginPassword);
+attachPwToggle($("pwToggleOld"), cpOld);
+attachPwToggle($("pwToggleNew"), cpNew);
+attachPwToggle($("pwToggleNew2"), cpNew2);
+attachPwToggle($("pwToggleSignup"), signupPassword);
+attachPwToggle($("pwToggleConfirm"), signupConfirm);
+
+function setAuthTab(t){
+  ui.authTab = t;
+  tabLogin.classList.toggle("active", t === 'login');
+  tabSignup.classList.toggle("active", t === 'signup');
+  loginForm.classList.toggle("hidden", t !== 'login');
+  signupForm.classList.toggle("hidden", t !== 'signup');
+  authSub.textContent = t === 'login'
+    ? t18n('loginSubtitle')
+    : t18n('signupSubtitle');
+}
+function setSignupMode(m){
+  ui.signupMode = m;
+  subTabExisting.classList.toggle("on", m === 'existing');
+  subTabNew.classList.toggle("on", m === 'new');
+  existingForm.classList.toggle("hidden", m !== 'existing');
+  newMemberForm.classList.toggle("hidden", m !== 'new');
+}
+tabLogin.addEventListener("click", () => setAuthTab('login'));
+tabSignup.addEventListener("click", () => setAuthTab('signup'));
+subTabExisting.addEventListener("click", () => setSignupMode('existing'));
+subTabNew.addEventListener("click", () => setSignupMode('new'));
+
+/* LOGIN */
+loginBtn.addEventListener("click", () => {
+  const name = loginName.value.trim();
+  const father = loginFather.value.trim();
+  const pass = loginPassword.value;
+  if (!name || !father || !pass) return authMsg('err', 'Please fill in all fields.');
+
+  /* Admin shortcut */
+  const isAdmin = DEFAULT_MEMBERS.find(m =>
+    m.role === 'Leader' &&
+    matchNameFather(m.name, name, father) &&
+    m.password === pass
+  );
+  let member = isAdmin;
+  if (!member) {
+    member = getAllMembers().find(m =>
+      matchNameFather(m.name, name, father) && m.password === pass
+    );
+  }
+  if (!member) {
+    const byName = getAllMembers().find(m => matchNameFather(m.name, name, father));
+    if (byName) return authMsg('err', 'Wrong password');
+    return authMsg('err', 'Account not found — please sign up');
+  }
+  if (!hasPermit(member.name)) {
+    return authMsg('err', '🚫 Your permit has been cancelled');
+  }
+  setUser({ name: member.name });
+  loginName.value = ''; loginFather.value = ''; loginPassword.value = '';
+  showToast(`Welcome, ${member.name.split(" ")[0]} ✓`);
+  loadDashboard();
+});
+
+/* CHANGE PASSWORD (existing member) */
+changePassBtn.addEventListener("click", () => {
+  const name = cpName.value.trim();
+  const father = cpFather.value.trim();
+  const oldP = cpOld.value;
+  const newP = cpNew.value;
+  const newP2 = cpNew2.value;
+  if (!name || !father || !oldP || !newP || !newP2)
+    return authMsg('err', 'Please fill in all fields.');
+  if (newP.length < 4) return authMsg('err', 'New password must be at least 4 characters.');
+  if (newP !== newP2) return authMsg('err', 'New passwords do not match.');
+  if (newP === oldP) return authMsg('err', 'New password must be different.');
+
+  /* Find member */
+  let member = DEFAULT_MEMBERS.find(m => matchNameFather(m.name, name, father) && m.password === oldP);
+  let isCustom = false;
+  if (!member) {
+    const customs = getCustomMembers();
+    const found = customs.find(m => matchNameFather(m.name, name, father) && m.password === oldP);
+    if (found) { member = found; isCustom = true; }
+  }
+  if (!member) {
+    const byName = DEFAULT_MEMBERS.find(m => matchNameFather(m.name, name, father)) ||
+                   getCustomMembers().find(m => matchNameFather(m.name, name, father));
+    if (byName) return authMsg('err', 'Old password is incorrect.');
+    return authMsg('err', 'Member not found.');
+  }
+
+  member.password = newP;
+  if (isCustom) {
+    const customs = getCustomMembers();
+    const idx = customs.findIndex(m => matchNameFather(m.name, name, father));
+    if (idx >= 0) { customs[idx].password = newP; setCustomMembers(customs); }
+  }
+  /* Also update DEFAULT_MEMBERS object in memory */
+  const idx2 = DEFAULT_MEMBERS.findIndex(m => matchNameFather(m.name, name, father));
+  if (idx2 >= 0) DEFAULT_MEMBERS[idx2].password = newP;
+
+  cpName.value = ''; cpFather.value = ''; cpOld.value = ''; cpNew.value = ''; cpNew2.value = '';
+  authMsg('ok', 'Password changed successfully. You can log in now.');
+  setTimeout(() => setAuthTab('login'), 1200);
+});
+
+/* SIGN UP (new member) */
+signupBtn.addEventListener("click", () => {
+  const fullName = signupName.value.trim();
+  const password = signupPassword.value;
+  const confirm = signupConfirm.value;
+  if (!fullName || !password || !confirm) return authMsg('err', 'Please fill in all fields.');
+  if (fullName.length < 2) return authMsg('err', 'Enter your full name.');
+  const parts = fullName.split(/\s+/).filter(Boolean);
+  if (parts.length < 2) return authMsg('err', 'Enter first name and father name (e.g. Sara Bekele).');
+  if (password.length < 4) return authMsg('err', 'Password must be at least 4 characters.');
+  if (password !== confirm) return authMsg('err', 'Passwords do not match.');
+  const exists = getAllMembers().some(m => m.name.toLowerCase() === fullName.toLowerCase());
+  if (exists) return authMsg('err', 'Account already exists — please log in.');
+
+  const newMember = { name: fullName, password, role: "Community Member", createdAt: Date.now() };
+  const custom = getCustomMembers();
+  custom.push(newMember);
+  setCustomMembers(custom);
+  setUser({ name: newMember.name });
+  signupName.value = ''; signupPassword.value = ''; signupConfirm.value = '';
+  showToast(`Welcome, ${newMember.name.split(" ")[0]} ✓`);
+  loadDashboard();
+});
+
+/* Helper translations for the subtitles */
+function t18n(key){
+  if (key === 'loginSubtitle') return 'Log in with your name, father name, and password';
+  if (key === 'signupSubtitle') return 'Choose a request type';
+  return key;
+}
+
+/* ==========================================================
+   CLOCK
+   ========================================================== */
+function tick() {
+  const now = new Date();
+  liveGreg.textContent = now.toLocaleDateString("en-GB", {
+    weekday: "long", day: "numeric", month: "long", year: "numeric"
+  });
+  const eth = getEthToday(now);
+  liveEth.textContent = `${eth.d} ${ETH_MONTHS[eth.m - 1]} ${eth.y} E.C.`;
+  liveTime.textContent = `${pad(now.getHours())}:${pad(now.getMinutes())}:${pad(now.getSeconds())}`;
+  renderDueInfo();
+}
+setInterval(tick, 1000);
+
+function renderDueInfo() {
+  if (!currentCycle) return;
+  const c = selectedMonth
+    ? { cycleY: selectedMonth.y, cycleM: selectedMonth.m,
+        penalty: isPenaltyActive(selectedMonth.y, selectedMonth.m) }
+    : currentCycle;
+  const { cycleY, cycleM, penalty } = c;
+  if (penalty) {
+    dueInfo.innerHTML = `Due: <strong>30 ${ETH_MONTHS[cycleM - 1]} ${cycleY}</strong>
+      <span class="penalty-on">+${PENALTY} Birr penalty · past month</span>`;
+  } else {
+    dueInfo.innerHTML = `Due: <strong>30 ${ETH_MONTHS[cycleM - 1]} ${cycleY}</strong>
+      <span class="penalty-off">No penalty — ${cycleM < PENALTY_START_MONTH ? 'before Hidar 2019' : 'current month'}</span>`;
+  }
+}
+
+function activeCycle() {
+  const user = getUser();
+  if (!user) return null;
+  if (selectedMonth) {
+    const cc = getCustomCycle(user, selectedMonth.y, selectedMonth.m);
+    return cc || getCycleInfo(user);
+  }
+  return getCycleInfo(user);
+}
+
+/* ==========================================================
+   MONTH BAR
+   ========================================================== */
+function renderMonthBar() {
+  const user = getUser();
+  if (!user) return;
+  const eth = getEthToday();
+  const year = eth.y;
+  const pay = getPay();
+  monthBar.innerHTML = ETH_MONTHS_SHORT.map((label, idx) => {
+    const mNum = idx + 1;
+    const key = `${year}-${pad(mNum)}`;
+    const rec = pay[key]?.[user.name];
+    const pos = monthPosition(year, mNum);
+    const isSelected = selectedMonth && selectedMonth.y === year && selectedMonth.m === mNum;
+    let cls = "month-pill";
+    if (rec) cls += " paid";
+    else if (pos === "past") cls += " past-unpaid";
+    else if (pos === "current") cls += " current";
+    if (isSelected) cls += " selected";
+    const tickMark = rec ? '<span class="tick">✓</span>' : '';
+    return `<div class="${cls}" data-y="${year}" data-m="${mNum}">${label}${tickMark}</div>`;
+  }).join("");
+  monthBar.querySelectorAll(".month-pill").forEach(pill => {
+    pill.addEventListener("click", () => {
+      const y = parseInt(pill.dataset.y, 10);
+      const m = parseInt(pill.dataset.m, 10);
+      selectMonth(y, m);
+    });
+  });
+}
+
+function selectMonth(y, m) {
+  const user = getUser();
+  if (!user) return;
+  const pay = getPay();
+  const key = `${y}-${pad(m)}`;
+  if (pay[key]?.[user.name]) {
+    showToast(`${ETH_MONTHS[m - 1]} already paid`, false, true);
+    return;
+  }
+  if (selectedMonth && selectedMonth.y === y && selectedMonth.m === m) {
+    selectedMonth = null;
+    showToast("Back to current month", false, true);
+  } else {
+    selectedMonth = { y, m };
+    const amt = amountForMonth(y, m);
+    const tag = isPenaltyActive(y, m) ? "past — penalty" : "no penalty";
+    showToast(`${ETH_MONTHS[m - 1]} ${y} · ${tag} · ${amt} Birr`, false, true);
+  }
+  renderPayment();
+  renderMonthBar();
+}
+
+/* ==========================================================
+   PAYMENT CARD
+   ========================================================== */
+function renderPayment() {
+  const user = getUser();
+  if (!user) return;
+  const cycle = activeCycle();
+  if (!cycle) return;
+  const permitted = hasPermit(user.name);
+  const rec = getPay()[cycle.cycleKey]?.[user.name];
+  const paid = !!rec;
+  const { penalty, isEarly, isCustom, cycleM } = cycle;
+
+  payCard.classList.toggle("cancelled", !permitted);
+  payCard.classList.toggle("late", permitted && !paid && penalty);
+  payCard.classList.toggle("custom", isCustom);
+  payCardLabel.textContent = isCustom ? "Selected Month Payment" : "Your Contribution";
+  cycleName.textContent = `Cycle: ${cycle.cycleLabel}`;
+
+  if (!permitted) {
+    payStatus.textContent = "Permit Cancelled";
+    payStatus.classList.add("cancelled");
+    payStatus.classList.remove("done");
+    optionsRow.innerHTML = `
+      <div style="flex:1; background:rgba(255,255,255,0.15); border-radius:14px; padding:16px; text-align:center;">
+        <div style="font-size:32px; margin-bottom:8px;">🚫</div>
+        <div style="font-size:13px; font-weight:700;">Your permit has been cancelled</div>
+        <div style="font-size:11px; opacity:0.85; margin-top:6px;">Contact Bayisa to restore access</div>
+      </div>`;
+    return;
+  }
+
+  if (paid) { payStatus.textContent = "Paid ✓"; payStatus.classList.add("done"); payStatus.classList.remove("cancelled"); }
+  else if (penalty) { payStatus.textContent = `Late — 250 Birr (incl. ${PENALTY} Birr penalty)`; payStatus.classList.remove("done", "cancelled"); }
+  else if (isEarly) { payStatus.textContent = `On time — 200 Birr`; payStatus.classList.remove("done", "cancelled"); }
+  else { payStatus.textContent = "Due Now"; payStatus.classList.remove("done", "cancelled"); }
+
+  if (paid) {
+    const { date, time } = fmtDateTime(rec.paidAt);
+    optionsRow.innerHTML = `
+      <div style="flex:1; background:rgba(255,255,255,0.15); border-radius:14px; padding:14px; text-align:center;">
+        <div style="font-size:11px; opacity:0.8; text-transform:uppercase; letter-spacing:0.5px;">Completed</div>
+        <div style="font-size:28px; font-weight:700; margin:6px 0 2px;">${rec.amount} Birr</div>
+        <div style="font-size:11px; opacity:0.85;">Paid on ${date} at ${time}</div>
+      </div>`;
+    return;
+  }
+
+  const onTimeActive = !penalty;
+  const lateActive = penalty;
+
+  const onTimeCard = `
+    <div class="option ${onTimeActive ? 'active' : 'inactive'}">
+      <div class="opt-head">Option 1 · On Time</div>
+      <div class="opt-title">Normal Payment<br>(${ETH_MONTHS[cycleM - 1]} ${cycle.cycleY})</div>
+      <div class="opt-amount">200</div>
+      <div class="opt-unit">Birr</div>
+      <div class="opt-note">${onTimeActive ? `Pay 200 Birr for ${ETH_MONTHS[cycleM - 1]} — no penalty` : `Locked — past month`}</div>
+      <div class="opt-action">${onTimeActive
+        ? `<button class="mini-btn green" data-amount="200">Pay 200 Birr</button>`
+        : `<div class="lock-icon">🔒 Locked</div>`}</div>
+    </div>`;
+
+  const lateCard = `
+    <div class="option ${lateActive ? 'active warn' : 'inactive'}">
+      <div class="opt-head">Option 2 · Late</div>
+      <div class="opt-title">Late Payment<br>(+${PENALTY} Birr penalty)</div>
+      <div class="opt-amount">250</div>
+      <div class="opt-unit">Birr</div>
+      <div class="opt-note">${lateActive ? `Includes +${PENALTY} Birr penalty — total 250 Birr` : `No penalty before Hidar 2019`}</div>
+      <div class="opt-action">${lateActive
+        ? `<button class="mini-btn red" data-amount="250">Pay 250 Birr</button>`
+        : `<div class="lock-icon">🔒 Not available</div>`}</div>
+    </div>`;
+
+  optionsRow.innerHTML = onTimeCard + lateCard;
+  optionsRow.querySelectorAll(".mini-btn").forEach(btn => {
+    btn.addEventListener("click", () => {
+      const amt = parseInt(btn.dataset.amount, 10);
+      handleComplete(amt);
+    });
+  });
+}
+
+/* ==========================================================
+   PAYMENT TABLE
+   ========================================================== */
+function renderTable() {
+  const user = getUser();
+  const members = getAllMembers();
+  const canManage = canManagePermits();
+  let paidCount = 0, dueCount = 0, lateCount = 0;
+
+  if (canManage && adminMode) {
+    tableHeadRow.innerHTML = `<th style="width:44px;text-align:center;">S/N</th><th>Member</th><th>Status</th><th>Amount</th><th>Paid At</th><th style="text-align:right;">Manage</th>`;
+  } else {
+    tableHeadRow.innerHTML = `<th style="width:44px;text-align:center;">S/N</th><th>Member</th><th>Status</th><th>Amount</th><th>Paid At</th>`;
+  }
+
+  tableBody.innerHTML = members.map((m, idx) => {
+    const ms = getMemberStatus(m);
+    const isMe = user && user.name === m.name;
+    const permitted = hasPermit(m.name);
+    const justPaid = lastPaid && lastPaid.name === m.name;
+    const justCancelled = lastCancelled && lastCancelled === m.name;
+
+    let badge, amount, paidAt;
+    const clickable = canManage && adminMode && !isMe;
+
+    if (ms.status === "Cancelled") {
+      badge = `<span class="badge cancelled">Cancelled</span>`;
+      amount = `<span class="amount-cell cancelled">—</span>`;
+      paidAt = `<span class="time-cell dim">—</span>`;
+    } else if (ms.status === "Paid") {
+      paidCount++;
+      badge = clickable
+        ? `<button class="badge paid" style="cursor:pointer;border:none;font-family:inherit;" data-toggle="${escapeHTML(m.name)}" title="Tap to mark unpaid">Paid ✓</button>`
+        : `<span class="badge paid">Paid</span>`;
+      const paidAmt = parseInt(String(ms.amount).replace(/[^0-9]/g, ""), 10) || 200;
+      amount = `<span class="amount-cell paid">${paidAmt} Birr</span>`;
+      const { date, time } = fmtDateTime(ms.paidAt);
+      paidAt = `<span class="time-cell">${date}<br><span class="dim">${time}</span></span>`;
+    } else if (ms.status === "Due") {
+      dueCount++;
+      badge = clickable
+        ? `<button class="badge due" style="cursor:pointer;border:none;font-family:inherit;" data-toggle="${escapeHTML(m.name)}" title="Tap to mark paid">Due — tap to pay</button>`
+        : `<span class="badge due">Due</span>`;
+      amount = `<span class="amount-cell">${BASE_FEE} Birr</span>`;
+      paidAt = `<span class="time-cell dim">—</span>`;
+    } else {
+      lateCount++;
+      badge = `<span class="badge late">Late</span>`;
+      amount = `<span class="amount-cell late">${ms.amount} Birr</span>`;
+      paidAt = `<span class="time-cell dim">—</span>`;
+    }
+
+    let permitCell = "";
+    if (canManage && adminMode) {
+      permitCell = `<td class="permit-cell">
+        ${permitted
+          ? `<button class="permit-btn cancel" data-name="${escapeHTML(m.name)}" data-action="cancel" title="Cancel permit">🚫</button>`
+          : `<button class="permit-btn restore" data-name="${escapeHTML(m.name)}" data-action="restore" title="Restore permit">✅</button>`}
+        <button class="permit-btn cancel" data-name="${escapeHTML(m.name)}" data-action="delpay" title="Delete all payments" style="margin-left:4px;">🗑️</button>
+      </td>`;
+    }
+
+    return `
+      <tr class="${isMe ? 'me' : ''} ${!permitted ? 'cancelled' : ''} ${justPaid ? 'row-flash' : ''} ${justCancelled ? 'row-warn' : ''}">
+        <td class="col-sn">${idx + 1}</td>
+        <td>
+          <div class="t-member-cell">
+            <span class="t-avatar" style="background:${permitted ? colorFor(m.name) : '#9ca3af'}">${initials(m.name)}</span>
+            <div>
+              <div class="t-name">${m.name}${isMe ? '<span class="you-tag">You</span>' : ''}</div>
+              <div class="${roleClass(m.role || "Community Member")}">${m.role || "Community Member"}</div>
+            </div>
+          </div>
+        </td>
+        <td>${badge}</td>
+        <td>${amount}</td>
+        <td>${paidAt}</td>
+        ${permitCell}
+      </tr>`;
+  }).join("");
+
+  tableBody.querySelectorAll(".permit-btn").forEach(btn => {
+    btn.addEventListener("click", () => {
+      const name = btn.dataset.name;
+      const action = btn.dataset.action;
+      if (action === "cancel") cancelPermit(name);
+      else if (action === "restore") restorePermit(name);
+      else if (action === "delpay") deletePaymentFor(name);
+    });
+  });
+
+  tableBody.querySelectorAll("button[data-toggle]").forEach(btn => {
+    btn.addEventListener("click", (e) => {
+      e.stopPropagation();
+      toggleMemberPaid(btn.dataset.toggle);
+    });
+  });
+
+  statPaid.textContent = paidCount;
+  statDue.textContent = dueCount;
+  statLate.textContent = lateCount;
+  statTotal.textContent = members.length;
+
+  const eth = getEthToday();
+  tableTitle.querySelector("span").textContent = `Afoosha Miiltoo — ${eth.d} ${ETH_MONTHS[eth.m - 1]} ${eth.y}`;
+
+  if (canManage) adminToggle.style.display = "inline-flex";
+  else adminToggle.style.display = "none";
+}
+
+function cancelPermit(name) {
+  if (!canManagePermits()) return showToast("Only Bayisa can cancel permits", true);
+  setPermit(name, false);
+  lastCancelled = name;
+  renderTable();
+  renderCompleted();
+  showToast(`Permit cancelled for ${name.split(" ")[0]} 🚫`, false, false, true);
+  setTimeout(() => { lastCancelled = null; }, 2200);
+}
+
+function restorePermit(name) {
+  if (!canManagePermits()) return showToast("Only Bayisa can restore permits", true);
+  setPermit(name, true);
+  renderTable();
+  renderCompleted();
+  showToast(`Permit restored for ${name.split(" ")[0]} ✓`);
+}
+
+function deletePaymentFor(name) {
+  if (!canDelete()) return showToast("Only Bayisa can delete payments", true);
+  askConfirm(
+    "Delete payment?",
+    `Delete all payment records for ${name}?`,
+    () => {
+      const pay = getPay();
+      let changed = false;
+      Object.keys(pay).forEach(k => {
+        if (pay[k] && pay[k][name]) { delete pay[k][name]; changed = true; }
+      });
+      if (changed) setPay(pay);
+      renderTable();
+      renderCompleted();
+      showToast(`Payments cleared for ${name.split(" ")[0]} ✓`);
+    },
+    "Delete",
+    true
+  );
+}
+window.deletePaymentFor = deletePaymentFor;
+
+function toggleMemberPaid(name) {
+  if (!canManagePermits()) return showToast("Only Bayisa can toggle payments", true);
+
+  const eth = getEthToday();
+  const year = eth.y;
+  const month = eth.m;
+  const key = `${year}-${pad(month)}`;
+
+  const pay = getPay();
+  if (!pay[key]) pay[key] = {};
+
+  if (pay[key][name]) {
+    delete pay[key][name];
+    showToast(`${name.split(" ")[0]} marked UNPAID`, false, false, true);
+  } else {
+    pay[key][name] = { paidAt: Date.now(), amount: 200 };
+    showToast(`${name.split(" ")[0]} marked PAID (200 Birr)`);
+  }
+
+  setPay(pay);
+  renderTable();
+  renderCompleted();
+  renderMonthBar();
+  renderPayment();
+}
+window.toggleMemberPaid = toggleMemberPaid;
+
+/* ==========================================================
+   COMPLETED — month by month, year 2019
+   ========================================================== */
+function renderCompleted() {
+  const year = FIXED_YEAR;
+  const eth = getEthToday();
+  const currentMonth = eth.m;
+  const pay = getPay();
+  const members = getAllMembers();
+  const user = getUser();
+  const canManage = canManagePermits();
+
+  let grandTotal = 0;
+  ETH_MONTHS.forEach((_, i) => {
+    const key = `${year}-${pad(i + 1)}`;
+    const cyc = pay[key] || {};
+    Object.keys(cyc).forEach(name => {
+      if (cyc[name] && cyc[name].paidAt) grandTotal++;
+    });
+  });
+
+  completedTitle.innerHTML = `
+    <span>✓ Payment Completed — ${year} E.C.</span>
+    <span class="badge-count ${grandTotal === 0 ? 'empty' : ''}">${grandTotal} total</span>`;
+
+  if (grandTotal === 0) {
+    completedWrap.innerHTML = `
+      <div class="empty-state">
+        <div class="icon">💳</div>
+        <div>No payments yet for ${year} E.C.</div>
+        <div style="font-size:11px; margin-top:6px; opacity:0.7;">Be the first to complete your contribution</div>
+      </div>`;
+    return;
+  }
+
+  const monthBlocks = ETH_MONTHS.map((mName, idx) => {
+    const mNum = idx + 1;
+    const key = `${year}-${pad(mNum)}`;
+    const cyc = pay[key] || {};
+
+    const rows = [];
+    members.forEach(m => {
+      const rec = cyc[m.name];
+      if (rec && rec.paidAt) {
+        rows.push({
+          name: m.name,
+          role: m.role || "Community Member",
+          amount: parseInt(String(rec.amount).replace(/[^0-9]/g, ""), 10) || 200,
+          paidAt: rec.paidAt,
+          isMe: user && user.name === m.name
+        });
+      }
+    });
+    rows.sort((a, b) => a.paidAt - b.paidAt);
+
+    if (rows.length === 0 && mNum !== currentMonth) return "";
+
+    const isOpen = (completedOpenMonth === null)
+      ? (mNum === currentMonth)
+      : (completedOpenMonth === mNum);
+
+    const isCurrent = mNum === currentMonth;
+    const monthBadge = `${rows.length} / ${members.length} paid`;
+    const monthSum = rows.reduce((s, r) => s + r.amount, 0);
+
+    const bodyHtml = !isOpen ? "" : (rows.length === 0
+      ? `<div style="padding:20px 14px;text-align:center;color:#94a3b8;font-size:12px;">
+           No payments yet for this month
+         </div>`
+      : `
+        <div class="month-table-wrap">
+          <table class="month-table">
+            <thead>
+              <tr>
+                <th style="width:48px;text-align:center;">S/N</th>
+                <th>Full Name</th>
+                <th style="text-align:right;">Amount</th>
+                <th style="text-align:right;">Paid Date</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${rows.map((r, i) => {
+                const { date, time } = fmtDateTime(r.paidAt);
+                const amtCls = r.amount >= 250 ? 'late' : 'ontime';
+                const pillAttr = (canManage && !r.isMe)
+                  ? `style="cursor:pointer;" onclick="toggleMemberPaid('${r.name.replace(/'/g, "\\'")}')" title="Tap to mark unpaid"`
+                  : '';
+                return `
+                  <tr class="${r.isMe ? 'me' : ''}">
+                    <td class="col-sn">${i + 1}</td>
+                    <td>
+                      <div class="t-member-cell">
+                        <span class="t-avatar" style="background:${colorFor(r.name)}">${initials(r.name)}</span>
+                        <div>
+                          <div class="t-name">${r.name}${r.isMe ? '<span class="you-tag">You</span>' : ''}</div>
+                          <div class="${roleClass(r.role)}">${r.role}</div>
+                        </div>
+                      </div>
+                    </td>
+                    <td style="text-align:right;">
+                      <span class="amount-pill ${amtCls}" ${pillAttr}>${r.amount} Birr</span>
+                    </td>
+                    <td style="text-align:right;">
+                      <span class="time-cell">${date}<br><span class="dim">${time}</span></span>
+                    </td>
+                  </tr>`;
+              }).join("")}
+            </tbody>
+            <tfoot>
+              <tr>
+                <td colspan="2" style="text-align:right;font-size:11px;color:#6b7280;font-weight:700;padding:10px;">
+                  Month total:
+                </td>
+                <td style="text-align:right;font-weight:800;color:#16a34a;font-size:13px;padding:10px;">
+                  ${monthSum} Birr
+                </td>
+                <td></td>
+              </tr>
+            </tfoot>
+          </table>
+        </div>`);
+
+    return `
+      <div class="month-block ${isCurrent ? 'current' : ''}">
+        <button class="month-block-head" onclick="toggleCompletedMonth(${mNum})">
+          <span class="month-arrow">${isOpen ? '▼' : '▶'}</span>
+          <span class="month-name">${mName} ${year}${isCurrent ? ' · current' : ''}</span>
+          <span class="month-badge ${rows.length === 0 ? 'empty' : ''}">${monthBadge}</span>
+        </button>
+        ${bodyHtml}
+      </div>`;
+  }).join("");
+
+  completedWrap.innerHTML = `<div class="months-list">${monthBlocks}</div>`;
+}
+
+function toggleCompletedMonth(mNum) {
+  if (completedOpenMonth === mNum) completedOpenMonth = -1;
+  else completedOpenMonth = mNum;
+  renderCompleted();
+}
+window.toggleCompletedMonth = toggleCompletedMonth;
+
+function handleComplete(amount) {
+  const user = getUser();
+  if (!user) return;
+  if (!hasPermit(user.name)) return showToast("Your permit has been cancelled", true);
+  const cycle = activeCycle();
+  if (!cycle) return;
+  const pay = getPay();
+  const key = cycle.cycleKey;
+  if (!pay[key]) pay[key] = {};
+  if (pay[key][user.name]) return showToast("Already paid this month", true);
+
+  const cleanAmt = parseInt(amount, 10) === 250 ? 250 : 200;
+  pay[key][user.name] = { paidAt: Date.now(), amount: cleanAmt };
+  setPay(pay);
+  lastPaid = { name: user.name, key: key };
+  selectedMonth = null;
+  currentCycle = getCycleInfo(user);
+  renderPayment();
+  renderMonthBar();
+  renderTable();
+  renderCompleted();
+  showToast(`Paid ${cleanAmt} Birr for ${cycle.cycleLabel} ✓`);
+  setTimeout(() => {
+    document.getElementById("completedTitle")?.scrollIntoView({ behavior: "smooth", block: "start" });
+  }, 400);
+  setTimeout(() => { lastPaid = null; }, 2200);
+}
+
+/* ==========================================================
+   SUB-NAV
+   ========================================================== */
+let currentSub = "files";
+
+function setSub(name) {
+  currentSub = name;
+  subNav.querySelectorAll("button").forEach(b => {
+    b.classList.toggle("on", b.dataset.sub === name);
+  });
+  filesSection.classList.toggle("hidden", name !== "files");
+  notesSection.classList.toggle("hidden", name !== "notes");
+  familySection.classList.toggle("hidden", name !== "family");
+  if (name === "files") renderFiles();
+  if (name === "notes") renderNotes();
+  if (name === "family") renderFamily();
+}
+subNav.addEventListener("click", (e) => {
+  const btn = e.target.closest("button[data-sub]");
+  if (!btn) return;
+  setSub(btn.dataset.sub);
+});
+
+/* ==========================================================
+   FILES
+   ========================================================== */
+let pendingFile = null;
+
+fileDrop.addEventListener("click", () => fileInput.click());
+fileDrop.addEventListener("dragover", (e) => {
+  e.preventDefault();
+  fileDrop.classList.add("drag");
+});
+fileDrop.addEventListener("dragleave", () => fileDrop.classList.remove("drag"));
+fileDrop.addEventListener("drop", (e) => {
+  e.preventDefault();
+  fileDrop.classList.remove("drag");
+  if (e.dataTransfer.files && e.dataTransfer.files[0]) pickFile(e.dataTransfer.files[0]);
+});
+fileInput.addEventListener("change", () => {
+  if (fileInput.files && fileInput.files[0]) pickFile(fileInput.files[0]);
+});
+
+function pickFile(f) {
+  if (f.size > MAX_FILE_SIZE) return showToast(t("fileTooBig"), true);
+  pendingFile = f;
+  filePicked.textContent = `${t("selected")}: ${shortName(f.name, 42)} (${fmtFileSize(f.size)})`;
+  fileCancelBtn.style.display = "inline-flex";
+  fileUploadBtn.style.display = "inline-flex";
+}
+fileCancelBtn.addEventListener("click", () => {
+  pendingFile = null;
+  fileInput.value = "";
+  filePicked.textContent = "";
+  fileCancelBtn.style.display = "none";
+  fileUploadBtn.style.display = "none";
+});
+fileUploadBtn.addEventListener("click", () => {
+  if (!pendingFile) return;
+  const user = getUser();
+  if (!user) return;
+  const f = pendingFile;
+  const reader = new FileReader();
+  reader.onload = () => {
+    const files = getFiles();
+    files.unshift({
+      id: "f_" + Date.now() + "_" + Math.random().toString(36).slice(2, 7),
+      name: f.name,
+      type: f.type || "application/octet-stream",
+      size: f.size,
+      data: reader.result,
+      uploadedBy: user.name,
+      uploadedAt: Date.now()
+    });
+    setFiles(files);
+    pendingFile = null;
+    fileInput.value = "";
+    filePicked.textContent = "";
+    fileCancelBtn.style.display = "none";
+    fileUploadBtn.style.display = "none";
+    renderFiles();
+    showToast(t("fileUploaded"));
+  };
+  reader.onerror = () => showToast(t("fileReadError"), true);
+  reader.readAsDataURL(f);
+});
+
+function renderFiles() {
+  const files = getFiles();
+  filesCount.textContent = files.length;
+  filesCount.classList.toggle("empty", files.length === 0);
+  if (!files.length) {
+    filesList.innerHTML = `<div class="empty-state"><div class="icon">📁</div><div>${t("noFiles")}</div></div>`;
+    return;
+  }
+  filesList.innerHTML = files.map(f => {
+    const { date, time } = fmtDateTime(f.uploadedAt);
+    return `
+      <div class="file-item">
+        <div class="fi-icon">${fileIcon(f.name, f.type)}</div>
+        <div class="fi-body">
+          <div class="fi-name" title="${f.name}">${shortName(f.name, 40)}</div>
+          <div class="fi-meta">${fmtFileSize(f.size)} · ${f.uploadedBy} · ${date} ${time}</div>
+        </div>
+        <div class="fi-actions">
+          <button class="fi-btn" data-act="preview" data-id="${f.id}" title="Preview">👁</button>
+          <button class="fi-btn dl" data-act="download" data-id="${f.id}" title="Download">⬇</button>
+          ${canDelete() ? `<button class="fi-btn danger" data-act="delete" data-id="${f.id}" title="Delete">✕</button>` : ""}
+        </div>
+      </div>`;
+  }).join("");
+  filesList.querySelectorAll(".fi-btn").forEach(btn => {
+    btn.addEventListener("click", () => {
+      const id = btn.dataset.id;
+      const act = btn.dataset.act;
+      const f = getFiles().find(x => x.id === id);
+      if (!f) return;
+      if (act === "preview") openFilePreview(f.data, f.name, f.type);
+      else if (act === "download") downloadDataURL(f.data, f.name);
+      else if (act === "delete") deleteFile(id, f.name);
+    });
+  });
+}
+
+function deleteFile(id, name) {
+  if (!canDelete()) return showToast("Only Bayisa can delete", true);
+  askConfirm(
+    "Delete file?",
+    `"${shortName(name, 40)}" will be removed permanently.`,
+    () => {
+      setFiles(getFiles().filter(f => f.id !== id));
+      renderFiles();
+      showToast(t("fileDeleted"));
+    },
+    "Delete",
+    true
+  );
+}
+
+/* ==========================================================
+   NOTES
+   ========================================================== */
+notePostBtn.addEventListener("click", () => {
+  const user = getUser();
+  if (!user) return;
+  const text = noteInput.value.trim();
+  if (!text) return showToast(t("noteEmpty"), true);
+  const notes = getNotes();
+  notes.unshift({
+    id: "n_" + Date.now() + "_" + Math.random().toString(36).slice(2, 7),
+    text, author: user.name, createdAt: Date.now()
+  });
+  setNotes(notes);
+  noteInput.value = "";
+  renderNotes();
+  showToast(t("notePosted"));
+});
+
+function renderNotes() {
+  const notes = getNotes();
+  notesCount.textContent = notes.length;
+  notesCount.classList.toggle("empty", notes.length === 0);
+  if (!notes.length) {
+    notesList.innerHTML = `<div class="empty-state"><div class="icon">📝</div><div>${t("noNotes")}</div></div>`;
+    return;
+  }
+  notesList.innerHTML = notes.map(n => {
+    const { date, time } = fmtDateTime(n.createdAt);
+    return `
+      <div class="note-card">
+        <div class="nc-head">
+          <div class="nc-author"><span class="t-avatar" style="background:${colorFor(n.author)}">${initials(n.author)}</span>${n.author}</div>
+          ${canDelete() ? `<div class="nc-actions">
+            <button class="note-mini" data-act="edit" data-id="${n.id}" title="Edit">✏️</button>
+            <button class="note-mini danger" data-act="delete" data-id="${n.id}" title="Delete">✕</button>
+          </div>` : ""}
+        </div>
+        <div class="nc-body">${escapeHTML(n.text)}</div>
+        <div class="nc-meta">
+          <span>${date} · ${time}</span>
+          ${n.editedAt ? `<span>${t("edited")}</span>` : ""}
+        </div>
+      </div>`;
+  }).join("");
+  notesList.querySelectorAll(".note-mini").forEach(btn => {
+    btn.addEventListener("click", () => {
+      const id = btn.dataset.id;
+      const act = btn.dataset.act;
+      if (act === "edit") editNote(id);
+      else if (act === "delete") deleteNote(id);
+    });
+  });
+}
+
+function deleteNote(id) {
+  if (!canDelete()) return showToast("Only Bayisa can delete", true);
+  askConfirm(
+    "Delete note?",
+    "This note will be removed permanently.",
+    () => {
+      setNotes(getNotes().filter(n => n.id !== id));
+      renderNotes();
+      showToast(t("noteDeleted"));
+    },
+    "Delete",
+    true
+  );
+}
+
+function editNote(id) {
+  if (!canDelete()) return showToast("Only Bayisa can edit notes", true);
+  const notes = getNotes();
+  const n = notes.find(x => x.id === id);
+  if (!n) return;
+
+  const root = document.getElementById("modalRoot");
+  root.innerHTML = `
+    <div style="position:fixed;inset:0;background:rgba(15,23,42,.55);backdrop-filter:blur(6px);
+                z-index:3000;display:flex;align-items:center;justify-content:center;padding:18px;">
+      <div style="background:#fff;border-radius:18px;padding:22px;width:100%;max-width:440px;
+                  box-shadow:0 20px 60px rgba(0,0,0,.35);">
+        <h3 style="font-size:17px;font-weight:800;margin-bottom:12px;">✏️ Edit note</h3>
+        <textarea id="edNoteText" style="width:100%;padding:12px;border:none;border-radius:10px;
+                  background:#f8fafc;font-family:inherit;font-size:14px;min-height:120px;
+                  box-shadow:inset 0 0 0 1px #e8eaf0;outline:none;resize:vertical;">${escapeHTML(n.text)}</textarea>
+        <div style="display:flex;gap:10px;justify-content:flex-end;margin-top:14px;">
+          <button id="edNo" style="padding:11px 18px;border-radius:10px;border:none;
+                  background:#eef1f8;color:#4f6ef7;font-size:14px;font-weight:700;cursor:pointer;
+                  font-family:inherit;">Cancel</button>
+          <button id="edYes" style="padding:11px 18px;border-radius:10px;border:none;
+                  background:#4f6ef7;color:#fff;font-size:14px;font-weight:700;cursor:pointer;
+                  font-family:inherit;">Save</button>
+        </div>
+      </div>
+    </div>`;
+
+  document.getElementById("edNo").onclick = () => { root.innerHTML = ""; };
+  document.getElementById("edYes").onclick = () => {
+    const val = document.getElementById("edNoteText").value.trim();
+    if (!val) return showToast("Note cannot be empty", true);
+    n.text = val;
+    n.editedAt = Date.now();
+    setNotes(notes);
+    root.innerHTML = "";
+    renderNotes();
+    showToast("Note updated ✓");
+  };
+}
+
+/* ==========================================================
+   FAMILY — single flat table
+   ========================================================== */
+function renderFamily() {
+  const all = getFamily();
+  const q = (familySearch.value || "").trim().toLowerCase();
+  const list = q
+    ? all.filter(m =>
+        (m.fullName || "").toLowerCase().includes(q) ||
+        (m.phone || "").toLowerCase().includes(q) ||
+        (m.relation || "").toLowerCase().includes(q))
+    : all;
+
+  familyCount.textContent = all.length;
+  familyCount.classList.toggle("empty", all.length === 0);
+
+  const wrap = document.getElementById("familyTablesWrap");
+  if (!wrap) return;
+
+  const canDel = canDelete();
+
+  const rows = list.map((m, i) => `
+    <tr>
+      <td class="col-sn">${i + 1}</td>
+      <td style="font-weight:600;">${escapeHTML(m.fullName)}</td>
+      <td class="col-gender">
+        <span class="gender-badge ${m.gender === "Female" ? "f" : "m"}">
+          ${m.gender === "Female" ? "♀ Female" : "♂ Male"}
+        </span>
+      </td>
+      <td class="col-phone">${escapeHTML(m.phone || "—")}</td>
+      <td style="color:#6b7280;font-size:12px;">${escapeHTML(m.relation || "—")}</td>
+      <td class="row-actions">
+        <button class="edit" data-act="edit" data-mid="${m.id}" title="Edit">✏️</button>
+        ${canDel ? `<button class="del" data-act="del" data-mid="${m.id}" title="Delete">✕</button>` : ""}
+      </td>
+    </tr>`).join("");
+
+  wrap.innerHTML = `
+    <div class="family-table-wrap">
+      <table class="family-table">
+        <thead>
+          <tr>
+            <th class="col-sn">S/N</th>
+            <th>Full Name</th>
+            <th>Gender</th>
+            <th>Phone Number</th>
+            <th>Relation</th>
+            <th style="text-align:right;">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${rows || `<tr><td colspan="6" style="text-align:center;padding:24px 10px;color:#94a3b8;font-size:12px;">
+            ${all.length ? "No match found" : "No family members yet — tap ➕ Add Member"}
+          </td></tr>`}
+        </tbody>
+      </table>
+    </div>`;
+
+  wrap.querySelectorAll("button[data-act]").forEach(btn => {
+    btn.addEventListener("click", () => {
+      const mid = btn.dataset.mid;
+      if (btn.dataset.act === "edit") editFamily(mid);
+      else if (btn.dataset.act === "del") deleteFamily(mid);
+    });
+  });
+}
+
+function showFamilyForm(member) {
+  if (!canEdit()) return showToast("Please log in first", true);
+  familyForm.classList.add("show");
+  if (member) {
+    familyEditId.value = member.id;
+    familyFullName.value = member.fullName || "";
+    familyGender.value = member.gender || "Male";
+    familyPhone.value = member.phone || "";
+    const rel = member.relation || "1. Head of family";
+    const found = Array.from(familyRelation.options).find(o =>
+      o.value === rel || o.value.endsWith(rel) || o.value.includes(rel)
+    );
+    familyRelation.value = found ? found.value : "1. Head of family";
+  } else {
+    familyEditId.value = "";
+    familyFullName.value = "";
+    familyGender.value = "Male";
+    familyPhone.value = "";
+    familyRelation.value = "1. Head of family";
+  }
+  setTimeout(() => familyFullName.focus(), 60);
+}
+window.showFamilyForm = showFamilyForm;
+
+function hideFamilyForm() {
+  familyForm.classList.remove("show");
+  familyEditId.value = "";
+  familyFullName.value = "";
+  familyPhone.value = "";
+  familyRelation.value = "1. Head of family";
+}
+
+familyAddBtn.addEventListener("click", () => {
+  if (!canEdit()) return showToast("Please log in first", true);
+  showFamilyForm(null);
+});
+familyCancelBtn.addEventListener("click", hideFamilyForm);
+
+familySaveBtn.addEventListener("click", () => {
+  if (!canEdit()) return showToast("Please log in first", true);
+  const fullName = familyFullName.value.trim();
+  const gender = familyGender.value;
+  const phone = familyPhone.value.trim();
+  const relation = familyRelation.value;
+
+  if (!fullName) return showToast("Please enter the full name", true);
+
+  const list = getFamily();
+  const id = familyEditId.value;
+
+  if (id) {
+    const m = list.find(x => x.id === id);
+    if (!m) return showToast("Member not found", true);
+    m.fullName = fullName;
+    m.gender = gender;
+    m.phone = phone;
+    m.relation = relation;
+    m.updatedAt = Date.now();
+    showToast("Member updated ✓");
+  } else {
+    list.push({
+      id: "fam_" + Date.now() + "_" + Math.random().toString(36).slice(2, 6),
+      fullName, gender, phone, relation,
+      createdAt: Date.now()
+    });
+    showToast("Member added ✓");
+  }
+
+  setFamily(list);
+  hideFamilyForm();
+  if (currentSub !== "family") setSub("family");
+  renderFamily();
+});
+
+function editFamily(id) {
+  if (!canEdit()) return showToast("Please log in first", true);
+  const m = getFamily().find(x => x.id === id);
+  if (!m) return;
+  showFamilyForm(m);
+  familyForm.scrollIntoView({ behavior: "smooth", block: "center" });
+}
+
+function deleteFamily(id) {
+  if (!canDelete()) return showToast("Only Bayisa can delete", true);
+  const m = getFamily().find(x => x.id === id);
+  if (!m) return;
+  askConfirm(
+    "Delete family member?",
+    `"${m.fullName}" will be removed from the family list.`,
+    () => {
+      setFamily(getFamily().filter(x => x.id !== id));
+      renderFamily();
+      showToast("Member deleted ✓");
+    },
+    "Delete",
+    true
+  );
+}
+
+familySearch.addEventListener("input", renderFamily);
+
+familyExportBtn.addEventListener("click", () => {
+  const list = getFamily();
+  if (!list.length) return showToast("No members to export", true);
+
+  const rows = [["S/N", "Full Name", "Gender", "Phone Number", "Relation"]];
+  list.forEach((m, i) => {
+    rows.push([i + 1, m.fullName || "", m.gender || "", m.phone || "", m.relation || ""]);
+  });
+
+  const csv = rows.map(r =>
+    r.map(cell => `"${String(cell).replace(/"/g, '""')}"`).join(",")
+  ).join("\r\n");
+
+  const blob = new Blob(["\uFEFF" + csv], { type: "text/csv;charset=utf-8;" });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = `Afoosha-Miiltoo-Family-${new Date().toISOString().slice(0, 10)}.csv`;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  setTimeout(() => URL.revokeObjectURL(url), 2000);
+  showToast("Exported ✓");
+});
+
+familyImportBtn.addEventListener("click", () => {
+  if (!canDelete()) return showToast("Only Bayisa can import", true);
+  familyImportInput.click();
+});
+
+familyImportInput.addEventListener("change", () => {
+  const file = familyImportInput.files && familyImportInput.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = () => {
+    try {
+      const text = String(reader.result || "").replace(/^\uFEFF/, "");
+      const lines = text.split(/\r?\n/).filter(l => l.trim().length);
+      if (lines.length < 2) throw new Error("empty");
+
+      const parseCSVLine = (line) => {
+        const out = [];
+        let cur = "";
+        let inQ = false;
+        for (let i = 0; i < line.length; i++) {
+          const ch = line[i];
+          if (inQ) {
+            if (ch === '"' && line[i + 1] === '"') { cur += '"'; i++; }
+            else if (ch === '"') inQ = false;
+            else cur += ch;
+          } else {
+            if (ch === '"') inQ = true;
+            else if (ch === ",") { out.push(cur); cur = ""; }
+            else cur += ch;
+          }
+        }
+        out.push(cur);
+        return out.map(s => s.trim());
+      };
+
+      const header = parseCSVLine(lines[0]).map(h => h.toLowerCase());
+      const idx = {
+        name:     header.findIndex(h => h.includes("name")),
+        gender:   header.findIndex(h => h.includes("gender") || h.includes("sex")),
+        phone:    header.findIndex(h => h.includes("phone") || h.includes("mobile") || h.includes("tel")),
+        relation: header.findIndex(h => h.includes("relation") || h.includes("family"))
+      };
+      if (idx.name < 0) throw new Error("no name column");
+
+      const imported = [];
+      for (let i = 1; i < lines.length; i++) {
+        const cols = parseCSVLine(lines[i]);
+        const fullName = (cols[idx.name] || "").trim();
+        if (!fullName) continue;
+        imported.push({
+          id: "fam_" + Date.now() + "_" + Math.random().toString(36).slice(2, 6),
+          fullName,
+          gender: idx.gender >= 0 && cols[idx.gender] ? cols[idx.gender] : "Male",
+          phone: idx.phone >= 0 ? (cols[idx.phone] || "") : "",
+          relation: idx.relation >= 0 ? (cols[idx.relation] || "") : "17. Other relative",
+          createdAt: Date.now()
+        });
+      }
+
+      if (!imported.length) throw new Error("no rows");
+
+      askConfirm(
+        "Import family list?",
+        `Import ${imported.length} members?`,
+        () => {
+          setFamily([...getFamily(), ...imported]);
+          if (currentSub !== "family") setSub("family");
+          renderFamily();
+          showToast(`Imported ${imported.length} members ✓`);
+        },
+        "Import",
+        false
+      );
+    } catch (e) {
+      showToast("Import failed — check the file format", true);
+    }
+    familyImportInput.value = "";
+  };
+  reader.readAsText(file);
+});
+
+/* ==========================================================
+   I18N
+   ========================================================== */
+const LANG_KEY = "milto_lang_v1";
+let currentLang = localStorage.getItem(LANG_KEY) || "en";
+
+const I18N = {
+  en: {
+    appName: "Afoosha Miiltoo",
+    login: "Log In", signup: "Sign Up", createAccount: "Create Account",
+    fullName: "Full Name", nameOnly: "Name", fatherName: "Father Name",
+    password: "Password", confirmPassword: "Confirm Password",
+    oldPassword: "Old Password", newPassword: "New Password", confirmNewPassword: "Confirm New Password",
+    existingMember: "Existing Member", newMember: "New Member",
+    changePasswordBtn: "Change Password", submitRequest: "Submit Request",
+    logout: "Log out",
+    phFirstName: "e.g. Bayisa",
+    phFatherName: "e.g. Batiri",
+    phFullName: "e.g. Sara Bekele Tola",
+    phPassword: "Your password",
+    phOldPassword: "Your current password",
+    phNewPassword: "New password (min 4)",
+    phConfirmNewPassword: "Re-enter new password",
+    phConfirmPassword: "Re-enter password",
+    payments: "Payments", files: "Files", notes: "Notes",
+    family: "Family",
+    familyList: "Member Family List",
+    addMember: "Add Member",
+    exportExcel: "Export Excel",
+    importExcel: "Import Excel",
+    gender: "Gender", phoneNumber: "Phone Number", relation: "Relation / Family",
+    actions: "Actions", save: "Save",
+    uploadFile: "Upload a File",
+    uploadFileSub: "Share documents, photos, or receipts with the community",
+    tapToChoose: "Tap to choose a file",
+    fileHint: "Max 5 MB · PDF, Word, Excel, image, text",
+    upload: "Upload", cancel: "Cancel",
+    sharedFiles: "Shared Files", noFiles: "No files shared yet",
+    fileUploaded: "File uploaded ✓", fileDeleted: "File deleted",
+    fileTooBig: "File is too big (max 5 MB)", fileReadError: "Could not read that file",
+    selected: "Selected",
+    writeNote: "Write a Note",
+    noteSub: "Announcements, reminders, or messages for the community",
+    notePh: "Write your note here…",
+    postNote: "Post Note", communityNotes: "Community Notes", noNotes: "No notes yet",
+    notePosted: "Note posted ✓", noteDeleted: "Note deleted", noteUpdated: "Note updated ✓",
+    noteEmpty: "Please write something first", edited: "edited"
+  },
+  om: {
+    appName: "Afoosha Miiltoo",
+    login: "Seeni", signup: "Galmaa'i", createAccount: "Herrega Uumi",
+    fullName: "Maqaa Guutuu", nameOnly: "Maqaa", fatherName: "Maqaa Abbaa",
+    password: "Jecha Iccitii", confirmPassword: "Jecha Iccitii Mirkaneessi",
+    oldPassword: "Jecha Iccitii Durii", newPassword: "Jecha Iccitii Haaraa",
+    confirmNewPassword: "Jecha Iccitii Haaraa Mirkaneessi",
+    existingMember: "Miseensa Jiru", newMember: "Miseensa Haaraa",
+    changePasswordBtn: "Jecha Iccitii Jijjiiri", submitRequest: "Gaaffii Ergi",
+    logout: "Ba'i",
+    payments: "Kaffaltiiwwan", files: "Faayiliiwwan", notes: "Yaadota",
+    family: "Maatii", familyList: "Tarree Maatii Miseensotaa",
+    addMember: "Miseensa Dabali", exportExcel: "Excel Baasi", importExcel: "Excel Galchi",
+    gender: "Saala", phoneNumber: "Lakkoofsa Bilbilaa", relation: "Firoottina",
+    actions: "Gochaalee", save: "Olkaa'i",
+    uploadFile: "Faayilii Olkaa'i", tapToChoose: "Faayilii filachuuf tuqi",
+    upload: "Olkaa'i", cancel: "Haqi",
+    sharedFiles: "Faayiliiwwan Qoodaman", noFiles: "Faayiliin hin qoodamne",
+    writeNote: "Yaada Barreessi", postNote: "Yaada Maxxansi",
+    communityNotes: "Yaadota Hawaasaa", noNotes: "Yaadni hin jiru",
+    cancel: "Haqi"
+  },
+  am: {
+    appName: "አፉሻ ሚልቶ",
+    login: "ግባ", signup: "ይመዝገቡ", createAccount: "መዝገብ ፍጠር",
+    fullName: "ሙሉ ስም", nameOnly: "ስም", fatherName: "የአባት ስም",
+    password: "የይለፍ ቃል", confirmPassword: "የይለፍ ቃል አረጋግጥ",
+    oldPassword: "የቆየ የይለፍ ቃል", newPassword: "አዲስ የይለፍ ቃል",
+    confirmNewPassword: "አዲሱን የይለፍ ቃል አረጋግጥ",
+    existingMember: "ያለ አባል", newMember: "አዲስ አባል",
+    changePasswordBtn: "የይለፍ ቃል ቀይር", submitRequest: "ጥያቄ አስገባ",
+    logout: "ውጣ",
+    payments: "ክፍያዎች", files: "ፋይሎች", notes: "ማስታወሻዎች",
+    family: "ቤተሰብ", familyList: "የአባላት ቤተሰብ ዝርዝር",
+    addMember: "አባል ጨምር", exportExcel: "Excel አውጣ", importExcel: "Excel አስገባ",
+    gender: "ጾታ", phoneNumber: "የስልክ ቁጥር", relation: "ዝምድና",
+    actions: "ተግባራት", save: "አስቀምጥ",
+    uploadFile: "ፋይል ይጫኑ", tapToChoose: "ፋይል ለመምረጥ ይንኩ",
+    upload: "ጫን", cancel: "ሰርዝ",
+    sharedFiles: "የተጋሩ ፋይሎች", noFiles: "እስካሁን የተጋራ ፋይል የለም",
+    writeNote: "ማስታወሻ ይጻፉ", postNote: "ማስታወሻ ለጥፍ",
+    communityNotes: "የማህበረሰብ ማስታወሻዎች", noNotes: "እስካሁን ማስታወሻ የለም",
+    cancel: "ሰርዝ"
+  }
+};
+
+function t(key) {
+  return (I18N[currentLang] && I18N[currentLang][key]) || (I18N.en && I18N.en[key]) || key;
+}
+
+function applyTranslations() {
+  document.querySelectorAll("[data-i18n]").forEach(el => {
+    const key = el.dataset.i18n;
+    const val = t(key);
+    if (val) el.textContent = val;
+  });
+  document.querySelectorAll("[data-i18n-ph]").forEach(el => {
+    const key = el.dataset.i18nPh;
+    const val = t(key);
+    if (val) el.placeholder = val;
+  });
+}
+
+function renderLangSelects() {
+  const opts = `
+    <option value="en" ${currentLang === "en" ? "selected" : ""}>🇬🇧 English</option>
+    <option value="om" ${currentLang === "om" ? "selected" : ""}>🇪🇹 Afaan Oromoo</option>
+    <option value="am" ${currentLang === "am" ? "selected" : ""}>🇪🇹 አማርኛ</option>`;
+  const a = $("langSelectAuth");
+  const b = $("langSelectApp");
+  if (a) a.innerHTML = opts;
+  if (b) b.innerHTML = opts;
+}
+
+function refreshSubNavLabels() {
+  subNav.querySelectorAll("button").forEach(b => {
+    b.textContent = t(b.dataset.sub);
+  });
+}
+
+function setLanguage(lang) {
+  if (!I18N[lang]) return;
+  currentLang = lang;
+  localStorage.setItem(LANG_KEY, lang);
+  document.documentElement.lang = lang;
+  renderLangSelects();
+  applyTranslations();
+  refreshSubNavLabels();
+  if (typeof renderFiles === "function") renderFiles();
+  if (typeof renderNotes === "function") renderNotes();
+  if (typeof renderFamily === "function") renderFamily();
+  if (typeof renderCompleted === "function") renderCompleted();
+  authSub.textContent = ui.authTab === 'login' ? 'Log in with your name, father name, and password' : 'Choose a request type';
+}
+window.setLanguage = setLanguage;
+
+/* ==========================================================
+   LOAD / AUTH STATE
+   ========================================================== */
+function loadDashboard() {
+  const user = getUser();
+  if (!user) {
+    authScreen.classList.remove("hidden");
+    appScreen.classList.add("hidden");
+    renderLangSelects();
+    applyTranslations();
+    return;
+  }
+  authScreen.classList.add("hidden");
+  appScreen.classList.remove("hidden");
+  renderLangSelects();
+  applyTranslations();
+  refreshSubNavLabels();
+  userLine.textContent = `Welcome, ${user.name}`;
+  userAvatar.textContent = initials(user.name);
+  selectedMonth = null;
+  lastPaid = null;
+  lastCancelled = null;
+  completedOpenMonth = null;
+  adminMode = canManagePermits();
+  currentCycle = getCycleInfo(user);
+
+  if (canManagePermits()) {
+    adminToggle.style.display = "inline-flex";
+    adminToggle.classList.toggle("on", adminMode);
+    adminToggle.textContent = adminMode ? "🔧 Admin Mode: ON" : "🔧 Admin Mode: Off";
+  } else {
+    adminToggle.style.display = "none";
+  }
+
+  tick();
+  renderPayment();
+  renderMonthBar();
+  renderTable();
+  renderCompleted();
+  renderFamily();
+  setSub(currentSub || "files");
+}
+
+logoutBtn.addEventListener("click", () => {
+  clearUser();
+  authScreen.classList.remove("hidden");
+  appScreen.classList.add("hidden");
+  setAuthTab('login');
+  setSignupMode('existing');
+  showToast("Logged out");
+});
+
+/* ==========================================================
+   BOOT
+   ========================================================== */
+renderLangSelects();
+applyTranslations();
+refreshSubNavLabels();
+setAuthTab('login');
+setSignupMode('existing');
+loadDashboard();
+
+setInterval(() => {
+  if (appScreen.classList.contains("hidden")) return;
+  const user = getUser();
+  if (!user) return;
+  currentCycle = getCycleInfo(user);
+  renderPayment();
+  renderMonthBar();
+  renderTable();
+  renderCompleted();
+}, 60000);
+
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('./sw.js').catch(err => {
+      console.log('SW registration skipped:', err);
+    });
+  });
+}
+
+function updateOnlineStatus() {
+  if (!offlineBadge) return;
+  offlineBadge.classList.toggle('show', !navigator.onLine);
+}
+window.addEventListener('online', updateOnlineStatus);
+window.addEventListener('offline', updateOnlineStatus);
+updateOnlineStatus();
+</script>
+</body>
+</html>
